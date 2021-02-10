@@ -1,0 +1,3 @@
+/home/joel/Orga-Ivan-Deras/easyasm-plugin-sample/build/CMakeFiles/rebuild_cache.dir
+/home/joel/Orga-Ivan-Deras/easyasm-plugin-sample/build/CMakeFiles/edit_cache.dir
+/home/joel/Orga-Ivan-Deras/easyasm-plugin-sample/build/CMakeFiles/sc-plugin.dir

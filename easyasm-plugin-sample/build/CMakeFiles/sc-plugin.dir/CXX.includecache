@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../easm.h
+cstdint
+-
+cstddef
+-
+
+/home/joel/Orga-Ivan-Deras/easyasm-plugin-sample/plugin_main.cpp
+iostream
+-
+easm.h
+-
+
