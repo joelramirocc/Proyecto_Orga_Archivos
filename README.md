@@ -3,7 +3,7 @@ NOTA: En este repositorio se realizara la creacion del proyecto de Organizacion 
 
 Descripcion del Proyecto:
 El proyecto consiste en la elaboracin de un videojuego dividido en dos partes, la logica principal del juego en MIT32, y la otra parte en C++ con la libreria rlutil.
-ALumno: Joel RAmiro CAballero Castellanos
+ALumno: Joel Ramiro CAballero Castellanos
 Catedratico: Ing. Ivan de Jesus Deras Tabora
 Clase: Organizacion de Computadoras
 
