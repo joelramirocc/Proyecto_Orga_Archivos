@@ -16,3 +16,4 @@ endif()
 add_library(${PROJECT_NAME} SHARED plugin_main.cpp)
 
 target_link_libraries(${PROJECT_NAME} -static-libgcc -static-libstdc++)
+

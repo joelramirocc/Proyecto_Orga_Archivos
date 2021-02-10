@@ -1,3 +1,0 @@
-/home/joel/Proyecto_Orga_Archivos/Proyecto/plugin_base/b/CMakeFiles/rebuild_cache.dir
-/home/joel/Proyecto_Orga_Archivos/Proyecto/plugin_base/b/CMakeFiles/edit_cache.dir
-/home/joel/Proyecto_Orga_Archivos/Proyecto/plugin_base/b/CMakeFiles/sc-plugin.dir
