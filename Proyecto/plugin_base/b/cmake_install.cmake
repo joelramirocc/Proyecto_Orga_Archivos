@@ -1,4 +1,4 @@
-# Install script for directory: /home/joel/Orga-Ivan-Deras/easyasm-plugin-sample
+# Install script for directory: /home/joel/Proyecto_Orga_Archivos/Proyecto/plugin_base
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/joel/Orga-Ivan-Deras/easyasm-plugin-sample/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/joel/Proyecto_Orga_Archivos/Proyecto/plugin_base/b/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

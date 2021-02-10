@@ -6,5 +6,5 @@ CXX_FLAGS = -fPIC   -std=gnu++14
 
 CXX_DEFINES = -Dsc_plugin_EXPORTS
 
-CXX_INCLUDES = -I/home/joel/Orga-Ivan-Deras/easyasm-plugin-sample/../pdk -I/home/joel/Orga-Ivan-Deras/easyasm-plugin-sample/build -I/home/joel/Orga-Ivan-Deras/easyasm-plugin-sample 
+CXX_INCLUDES = -I/home/joel/Proyecto_Orga_Archivos/Proyecto/plugin_base/../pdk -I/home/joel/Proyecto_Orga_Archivos/Proyecto/plugin_base/b -I/home/joel/Proyecto_Orga_Archivos/Proyecto/plugin_base 
 

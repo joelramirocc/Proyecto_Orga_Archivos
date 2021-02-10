@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/joel/Orga-Ivan-Deras/easyasm-plugin-sample/plugin_main.cpp" "/home/joel/Orga-Ivan-Deras/easyasm-plugin-sample/build/CMakeFiles/sc-plugin.dir/plugin_main.cpp.o"
+  "/home/joel/Proyecto_Orga_Archivos/Proyecto/plugin_base/plugin_main.cpp" "/home/joel/Proyecto_Orga_Archivos/Proyecto/plugin_base/b/CMakeFiles/sc-plugin.dir/plugin_main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

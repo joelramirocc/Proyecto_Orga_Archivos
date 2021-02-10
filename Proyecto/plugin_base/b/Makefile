@@ -48,10 +48,10 @@ RM = /usr/local/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/joel/Orga-Ivan-Deras/easyasm-plugin-sample
+CMAKE_SOURCE_DIR = /home/joel/Proyecto_Orga_Archivos/Proyecto/plugin_base
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/joel/Orga-Ivan-Deras/easyasm-plugin-sample/build
+CMAKE_BINARY_DIR = /home/joel/Proyecto_Orga_Archivos/Proyecto/plugin_base/b
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/joel/Orga-Ivan-Deras/easyasm-plugin-sample/build/CMakeFiles /home/joel/Orga-Ivan-Deras/easyasm-plugin-sample/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/joel/Proyecto_Orga_Archivos/Proyecto/plugin_base/b/CMakeFiles /home/joel/Proyecto_Orga_Archivos/Proyecto/plugin_base/b/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/joel/Orga-Ivan-Deras/easyasm-plugin-sample/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/joel/Proyecto_Orga_Archivos/Proyecto/plugin_base/b/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
