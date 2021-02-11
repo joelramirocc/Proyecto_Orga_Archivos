@@ -1,3 +1,154 @@
 .global draw
+
+;la $a0, str1 
+;Jal print_str
+
+.data 
+Str1: .byte "texto ", 0
+str1: .byte "==============================================================================================================================================================================================", 0
+
+str2: .byte "          PLAYER 1          ||", 0
+str3: .byte "                            ||", 0
+str4: .byte "    ________    ||", 0
+str5: .byte "   |       SCORE        |   ||", 0
+str6: .byte "   |     0000000000     |   ||", 0
+str7: .byte "   |      LIVES: ", 0
+str8: .byte "   |      ROUND: ", 0
+str9: .byte "   |________|   ||", 0
+str10: .byte "     |   ||", 0
+.text
+
+;vertical = t0,t1
+;horizontal=t1,t2
+;horizontal extra = t3,t4
+
 draw:
-    
+addi $sp,$sp,-4
+sw $ra,0($sp)
+
+la $a0, str1 
+jal printString
+
+li $a0,10
+jal printChar
+
+jal vertical_draw
+
+lw $ra,0($sp)
+addi $sp,$sp,4
+jr $ra
+
+vertical_draw:
+li $t0,0
+li $t1,40
+for_vertical_draw:
+slt $t2,$t0,$t1
+
+beq $t2,$zero,end_for_vertical_draw
+	j horizontal_draw
+
+    continueDraw:
+	addi $t0,$t0,1
+	j for_vertical_draw	
+
+end_for_vertical_draw:
+	j end_draw
+	
+end_draw:
+
+addi $sp,$sp,-4
+sw $ra,0($sp)
+
+la $a0, str1 
+jal printString
+
+li $a0,10
+jal printChar
+
+lw $ra,0($sp)
+addi $sp,$sp,4
+
+jr $ra
+
+
+horizontal_draw:
+li $t2,0
+li $t3,160
+li $t6,1
+
+for_horizontal_draw:	
+	slt $t4,$t2,$t3
+	beq $t4,$zero,end_for_horizontal_draw
+		base:
+            li $t5,2
+			slt $t4,$t2,$t5
+			beq $t4,$zero,NoBase
+				li $a0,124
+                addi $sp,$sp,-4
+                sw $ra,0($sp)
+                jal printChar
+                lw $ra,0($sp)
+                addi $sp,$sp,4
+				j EndBase
+		NoBase:
+			li $t5,158
+			bne $t2,$t5,NoBase2
+				li $a0,124
+                
+                addi $sp,$sp,-4
+                sw $ra,0($sp)
+                jal printChar
+                lw $ra,0($sp)
+                addi $sp,$sp,4
+
+				j EndBase
+		NoBase2:
+			li $t5,159
+			bne $t2,$t5,NoBase3
+				li $a0,124
+                
+                addi $sp,$sp,-4
+                sw $ra,0($sp)
+                jal printChar
+                lw $ra,0($sp)
+                addi $sp,$sp,4
+
+				j EndBase
+		NoBase3:
+				li $a0,32
+                
+                addi $sp,$sp,-4
+                sw $ra,0($sp)
+                jal printChar
+                lw $ra,0($sp)
+                addi $sp,$sp,4
+            
+            j EndBase
+        EndBase:
+			addi $t2,$t2,1
+			j for_horizontal_draw	
+end_for_horizontal_draw:
+	j horizontal_extra_draw
+
+
+horizontal_extra_draw:	
+la $a0, str3 
+
+    addi $sp,$sp,-4
+    sw $ra,0($sp)
+    jal printString
+    lw $ra,0($sp)
+    addi $sp,$sp,4
+
+
+end_horizontal_extra_draw:
+
+li $a0,10
+
+    addi $sp,$sp,-4
+    sw $ra,0($sp)
+    jal printChar
+    lw $ra,0($sp)
+    addi $sp,$sp,4
+
+j continueDraw
