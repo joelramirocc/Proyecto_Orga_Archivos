@@ -15,7 +15,7 @@ Se controla una pequeña plataforma apodada Nave Espacial Vaus, que impide que u
 
 Alcance con el proyecto:
 Elaboración de por lo menos 1 nivel de Arkanoid  donde habrá diferentes tipos de bloque:
--Cada grupo necesitarán número de golpes para destruir un bloque; bloque más débil será de 1 golpe
+-Cada grupo necesitará N número de golpes para destruir un bloque; bloque más débil será de 1 golpe
 Se manejará una nave que se mueve horizontalmente y dispara balas:
 -Posiblemente diferentes niveles de disparo:
     * 1 disparo a la vez
