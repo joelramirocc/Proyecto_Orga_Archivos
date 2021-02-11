@@ -26,8 +26,14 @@ draw:
 addi $sp,$sp,-4
 sw $ra,0($sp)
 
+li $a0,9
+li $v0,20
+syscall
 la $a0, str1 
 jal printString
+
+li $v0,21
+syscall
 
 li $a0,10
 jal printChar
@@ -59,8 +65,13 @@ end_draw:
 addi $sp,$sp,-4
 sw $ra,0($sp)
 
-la $a0, str1 
-jal printString
+    li $a0,9
+    li $v0,20
+    syscall
+    la $a0, str1 
+    jal printString
+    li $v0,21
+    syscall
 
 li $a0,10
 jal printChar
@@ -83,21 +94,35 @@ for_horizontal_draw:
             li $t5,2
 			slt $t4,$t2,$t5
 			beq $t4,$zero,NoBase
-				li $a0,124
                 addi $sp,$sp,-4
                 sw $ra,0($sp)
-                jal printChar
+
+                    li $a0,9
+                    li $v0,20
+                    syscall
+                    li $a0,124
+                    jal printChar                
+                    li $v0,21
+                    syscall
+
                 lw $ra,0($sp)
                 addi $sp,$sp,4
 				j EndBase
 		NoBase:
 			li $t5,158
 			bne $t2,$t5,NoBase2
-				li $a0,124
                 
                 addi $sp,$sp,-4
                 sw $ra,0($sp)
-                jal printChar
+
+                    li $a0,4
+                    li $v0,20
+                    syscall
+                    li $a0,124
+                    jal printChar
+                    li $v0,21
+                    syscall
+
                 lw $ra,0($sp)
                 addi $sp,$sp,4
 
@@ -105,11 +130,17 @@ for_horizontal_draw:
 		NoBase2:
 			li $t5,159
 			bne $t2,$t5,NoBase3
-				li $a0,124
                 
                 addi $sp,$sp,-4
                 sw $ra,0($sp)
-                jal printChar
+
+                    li $a0,4
+                    li $v0,20
+                    syscall
+                    li $a0,124
+                    jal printChar
+                    li $v0,21
+                    syscall
                 lw $ra,0($sp)
                 addi $sp,$sp,4
 
@@ -132,19 +163,27 @@ end_for_horizontal_draw:
 
 
 horizontal_extra_draw:	
-la $a0, str3 
+
+
 
     addi $sp,$sp,-4
     sw $ra,0($sp)
-    jal printString
+    
+        li $a0,9
+        li $v0,20
+        syscall
+        la $a0, str3 
+        jal printString
+        li $v0,21
+        syscall
+
     lw $ra,0($sp)
     addi $sp,$sp,4
 
 
 end_horizontal_extra_draw:
 
-li $a0,10
-
+    li $a0,10
     addi $sp,$sp,-4
     sw $ra,0($sp)
     jal printChar

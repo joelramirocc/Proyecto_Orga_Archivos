@@ -11,27 +11,12 @@ extern "C" ErrorCode handleSyscall(uint32_t *regs, void *mem, MemoryMap *mem_map
 
         case 20:
         {
-            rlutil::setBackgroundColor(rlutil::BLUE);
+            rlutil::setColor(regs[Register::a0]);
             return ErrorCode::Ok;
         }
-        case 22:
-        {
-
-            int MAPSIZE = regs[Register::a0];
-            cout<<"a:"<<MAPSIZE<<endl;
-            rlutil::cls();
-            rlutil::locate(1, MAPSIZE + 1);
-            rlutil::setColor(rlutil::YELLOW);
-            rlutil::locate(1, 1);
-            int i, j;
-            for (j = 0; j < 40; j++) {
-                cout<<"T";
-                for (i = 0; i < 160; i++) 
-                {
-                    cout<<" ";
-                }
-                cout<<"T"<<endl;
-            }
+        case 21:
+        {   
+            rlutil::resetColor();
             return ErrorCode::Ok;
         }
         default:
