@@ -9,13 +9,12 @@ str1: .byte "===================================================================
 
 str2: .byte "          PLAYER 1          ||", 0
 str3: .byte "                            ||", 0
-str4: .byte "    ________    ||", 0
+str4: .byte "    ____________________    ||", 0
 str5: .byte "   |       SCORE        |   ||", 0
 str6: .byte "   |     0000000000     |   ||", 0
-str7: .byte "   |      LIVES: ", 0
-str8: .byte "   |      ROUND: ", 0
-str9: .byte "   |________|   ||", 0
-str10: .byte "     |   ||", 0
+str7: .byte "   |      LIVES:04      |   ||", 0
+str8: .byte "   |      ROUND:01      |   ||", 0
+str9: .byte "   |____________________|   ||", 0
 .text
 
 ;vertical = t0,t1
@@ -164,8 +163,28 @@ end_for_horizontal_draw:
 
 horizontal_extra_draw:	
 
+    li $t6,6
+    beq $t0,$t6,drawTitle
 
+    li $t6,8
+    beq $t0,$t6,drawLine
 
+    li $t6,9
+    beq $t0,$t6,drawScore
+
+    li $t6,10
+    beq $t0,$t6,drawScorePoints
+
+    li $t6,11
+    beq $t0,$t6,drawLives
+
+    li $t6,12
+    beq $t0,$t6,drawPoints
+    
+    li $t6,13
+    beq $t0,$t6,drawEndLine
+
+    continueDrawExtra:
     addi $sp,$sp,-4
     sw $ra,0($sp)
     
@@ -191,3 +210,110 @@ end_horizontal_extra_draw:
     addi $sp,$sp,4
 
 j continueDraw
+
+drawTitle:
+addi $sp,$sp,-4
+sw $ra,0($sp)
+
+    li $a0,9
+    li $v0,20
+    syscall
+    la $a0, str2 
+    jal printString
+    li $v0,21
+    syscall
+lw $ra,0($sp)
+addi $sp,$sp,4
+j end_horizontal_extra_draw
+
+drawLine:
+addi $sp,$sp,-4
+sw $ra,0($sp)
+
+    li $a0,9
+    li $v0,20
+    syscall
+    la $a0, str4 
+    jal printString
+    li $v0,21
+    syscall
+lw $ra,0($sp)
+addi $sp,$sp,4
+j end_horizontal_extra_draw
+
+drawScore:
+addi $sp,$sp,-4
+sw $ra,0($sp)
+
+    li $a0,9
+    li $v0,20
+    syscall
+    la $a0, str5 
+    jal printString
+    li $v0,21
+    syscall
+lw $ra,0($sp)
+addi $sp,$sp,4
+j end_horizontal_extra_draw
+
+drawScorePoints:
+addi $sp,$sp,-4
+sw $ra,0($sp)
+
+    li $a0,9
+    li $v0,20
+    syscall
+    la $a0, str6 
+    jal printString
+    li $v0,21
+    syscall
+lw $ra,0($sp)
+addi $sp,$sp,4
+j end_horizontal_extra_draw
+
+
+drawLives:
+addi $sp,$sp,-4
+sw $ra,0($sp)
+
+    li $a0,9
+    li $v0,20
+    syscall
+    la $a0, str7
+    jal printString
+    li $v0,21
+    syscall
+lw $ra,0($sp)
+addi $sp,$sp,4
+j end_horizontal_extra_draw
+
+
+drawPoints:
+addi $sp,$sp,-4
+sw $ra,0($sp)
+
+    li $a0,9
+    li $v0,20
+    syscall
+    la $a0, str8
+    jal printString
+    li $v0,21
+    syscall
+lw $ra,0($sp)
+addi $sp,$sp,4
+j end_horizontal_extra_draw
+
+drawEndLine:
+addi $sp,$sp,-4
+sw $ra,0($sp)
+
+    li $a0,9
+    li $v0,20
+    syscall
+    la $a0, str9
+    jal printString
+    li $v0,21
+    syscall
+lw $ra,0($sp)
+addi $sp,$sp,4
+j end_horizontal_extra_draw
