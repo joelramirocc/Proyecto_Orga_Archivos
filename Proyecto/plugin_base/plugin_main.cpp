@@ -1,6 +1,9 @@
 #include <iostream>
 #include <easm.h>
 #include "rlutil.h" 
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctime>
 
 using namespace std;
 extern "C" ErrorCode handleSyscall(uint32_t *regs, void *mem, MemoryMap *mem_map)
@@ -17,6 +20,12 @@ extern "C" ErrorCode handleSyscall(uint32_t *regs, void *mem, MemoryMap *mem_map
         case 21:
         {   
             rlutil::resetColor();
+            return ErrorCode::Ok;
+        }
+        case 22:
+        {   
+            int result = 1 + (rand() % 3);
+            regs[Register::v0] = result;
             return ErrorCode::Ok;
         }
         default:
