@@ -11,7 +11,6 @@ extern "C" ErrorCode handleSyscall(uint32_t *regs, void *mem, MemoryMap *mem_map
     unsigned v0 = regs[Register::v0];
     switch (v0)
     {
-
         case 20:
         {
             rlutil::setColor(regs[Register::a0]);
@@ -26,6 +25,18 @@ extern "C" ErrorCode handleSyscall(uint32_t *regs, void *mem, MemoryMap *mem_map
         {   
             int result = 1 + (rand() % 3);
             regs[Register::v0] = result;
+            return ErrorCode::Ok;
+        }
+        case 23:
+        {
+            int dColor = regs[Register::a0];
+            int color = dColor == 1?10:dColor ==2?6:4;
+            rlutil::setColor(color);
+            return ErrorCode::Ok;
+        }
+        case 24:
+        {
+            rlutil::cls();
             return ErrorCode::Ok;
         }
         default:

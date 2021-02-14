@@ -5,7 +5,7 @@
 
 .data 
 Str1: .byte "texto ", 0
-str1: .byte "==============================================================================================================================================================================================", 0
+str1: .byte "===========================================================================================================================", 0
 
 str2: .byte "          PLAYER 1          ||", 0
 str3: .byte "                            ||", 0
@@ -25,6 +25,7 @@ draw:
 addi $sp,$sp,-228
 sw $ra,224($sp)
 move $a0,$sp
+move $s6,$sp
 li $a1,56
 jal function_get_bloques
 li $a0,9
@@ -46,16 +47,16 @@ addi $sp,$sp,228
 jr $ra
 
 vertical_draw:
-li $t0,0
-li $t1,40
+li $s0,0
+li $s1,30
 for_vertical_draw:
-slt $t2,$t0,$t1
+slt $s2,$s0,$s1
 
-beq $t2,$zero,end_for_vertical_draw
+beq $s2,$zero,end_for_vertical_draw
 	j horizontal_draw
 
     continueDraw:
-	addi $t0,$t0,1
+	addi $s0,$s0,1
 	j for_vertical_draw	
 
 end_for_vertical_draw:
@@ -84,17 +85,17 @@ jr $ra
 
 
 horizontal_draw:
-li $t2,0
-li $t3,160
+li $s2,0
+li $t3,93
 li $t6,1
 
 for_horizontal_draw:	
-	slt $t4,$t2,$t3
-	beq $t4,$zero,end_for_horizontal_draw
+	slt $s4,$s2,$t3
+	beq $s4,$zero,end_for_horizontal_draw
 		base:
             li $t5,2
-			slt $t4,$t2,$t5
-			beq $t4,$zero,NoBase
+			slt $s4,$s2,$t5
+			beq $s4,$zero,NoBase
                 addi $sp,$sp,-4
                 sw $ra,0($sp)
 
@@ -110,13 +111,13 @@ for_horizontal_draw:
                 addi $sp,$sp,4
 				j EndBase
 		NoBase:
-			li $t5,158
-			bne $t2,$t5,NoBase2
+			li $t5,91
+			bne $s2,$t5,NoBase2
                 
                 addi $sp,$sp,-4
                 sw $ra,0($sp)
 
-                    li $a0,4
+                    li $a0,7
                     li $v0,20
                     syscall
                     li $a0,124
@@ -129,13 +130,13 @@ for_horizontal_draw:
 
 				j EndBase
 		NoBase2:
-			li $t5,159
-			bne $t2,$t5,NoBase3
+			li $t5,92
+			bne $s2,$t5,NoBase3
                 
                 addi $sp,$sp,-4
                 sw $ra,0($sp)
 
-                    li $a0,4
+                    li $a0,7
                     li $v0,20
                     syscall
                     li $a0,124
@@ -148,16 +149,28 @@ for_horizontal_draw:
 				j EndBase
 		NoBase3:
 				li $a0,32
-                
                 addi $sp,$sp,-4
                 sw $ra,0($sp)
+                move $a0,$s0
+                move $a1,$s2
+                move $a2,$s6
+                jal draw_blocks
+                lw $ra,0($sp)
+                addi $sp,$sp,4
+                move $t7,$v0
+                bne $t7,$zero,found_block
+                addi $sp,$sp,-4
+                sw $ra,0($sp)
+                li $a0,32
                 jal printChar
                 lw $ra,0($sp)
                 addi $sp,$sp,4
-            
-            j EndBase
+                j EndBase
+            found_block:
+                addi $s2,$s2,9
+                j EndBase
         EndBase:
-			addi $t2,$t2,1
+			addi $s2,$s2,1
 			j for_horizontal_draw	
 end_for_horizontal_draw:
 	j horizontal_extra_draw
@@ -166,25 +179,25 @@ end_for_horizontal_draw:
 horizontal_extra_draw:	
 
     li $t6,6
-    beq $t0,$t6,drawTitle
+    beq $s0,$t6,drawTitle
 
     li $t6,8
-    beq $t0,$t6,drawLine
+    beq $s0,$t6,drawLine
 
     li $t6,9
-    beq $t0,$t6,drawScore
+    beq $s0,$t6,drawScore
 
     li $t6,10
-    beq $t0,$t6,drawScorePoints
+    beq $s0,$t6,drawScorePoints
 
     li $t6,11
-    beq $t0,$t6,drawLives
+    beq $s0,$t6,drawLives
 
     li $t6,12
-    beq $t0,$t6,drawPoints
+    beq $s0,$t6,drawPoints
     
     li $t6,13
-    beq $t0,$t6,drawEndLine
+    beq $s0,$t6,drawEndLine
 
     continueDrawExtra:
     addi $sp,$sp,-4

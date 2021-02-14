@@ -7,6 +7,8 @@ Str1: .byte "texto ", 0
 main:
 addi $sp,$sp,-4
 sw $ra,0($sp)
+li $v0,24
+syscall
 jal draw
 lw $ra,0($sp)
 addi $sp,$sp,4
