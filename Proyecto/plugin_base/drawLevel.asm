@@ -19,10 +19,15 @@ str9: .byte "   |____________________|   ||", 0
 
 
 draw:
-addi $sp,$sp,-4
-sw $ra,0($sp)
-move $s6,$a0
+addi $sp,$sp,-24
+sw $ra,20($sp)
+sw $s0,16($sp)
+sw $s1,12($sp)
+sw $s2,8($sp)
+sw $s3,4($sp)
+sw $s4,0($sp)
 
+move $s4,$a0
 li $a0,9
 li $v0,20
 syscall
@@ -34,8 +39,14 @@ li $a0,10
 jal printChar
 
 jal vertical_draw
-lw $ra,0($sp)
-addi $sp,$sp,4
+lw $ra,20($sp)
+lw $s0,16($sp)
+lw $s1,12($sp)
+lw $s2,8($sp)
+lw $s3,4($sp)
+lw $s4,0($sp)
+
+addi $sp,$sp,24
 jr $ra
 
 
@@ -147,7 +158,7 @@ for_horizontal_draw:
                 sw $ra,0($sp)
                 move $a0,$s0
                 move $a1,$s2
-                move $a2,$s6
+                move $a2,$s4
                 jal draw_blocks
                 lw $ra,0($sp)
                 addi $sp,$sp,4
