@@ -3,6 +3,7 @@
 .data 
 Str1: .byte "[TTTTTTTT]", 0
 Str2: .byte "          ", 0
+Str3: .byte "<@@@@@@@@>", 0
 .text
 
 ;a0=>linea
@@ -34,7 +35,8 @@ draw_blocks:
     li $t2,43
     li $t0,9
     beq $a0,$t0,continue_draw
-    li $t2,60
+    li $t0,29
+    beq $a0,$t0,draw_nave
     li $v0,0
     j end_function
 
@@ -90,6 +92,27 @@ continue_draw_block:
         li $v0,1
         j end_function
 
+draw_nave:
+    li $t3,56
+    sll $t1, $t3,2
+    add $t1,$t1,$a2
+    lw $t1,0($t1)
+    bne $t1,$a1,no_nave_found
+        addi $sp,$sp,-4
+        sw $ra,0($sp)
+        la $a0, Str3 
+        jal printString
+        li $v0,21
+        syscall        
+        lw $ra,0($sp)
+        addi $sp,$sp,4
+        li $v0,1
+        j end_function
+
+no_nave_found:
+ li $v0,0
+ j end_function
+
 semi_end_Function:
         addi $sp,$sp,-4
         sw $ra,0($sp)
@@ -108,3 +131,4 @@ semi_end_Function:
         j end_function
 end_function:
 jr $ra
+

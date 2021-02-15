@@ -22,10 +22,14 @@ str9: .byte "   |____________________|   ||", 0
 ;horizontal extra = t3,t4
 
 draw:
-addi $sp,$sp,-228
-sw $ra,224($sp)
+addi $sp,$sp,-232
+addi $t9,$sp,228
+#show  $t9
+sw $ra,228($sp)
 move $a0,$sp
 move $s6,$sp
+li $t0,37
+sw $t0,224($sp)
 li $a1,56
 jal function_get_bloques
 li $a0,9
@@ -42,8 +46,8 @@ jal printChar
 
 jal vertical_draw
 
-lw $ra,224($sp)
-addi $sp,$sp,228
+lw $ra,228($sp)
+addi $sp,$sp,232
 jr $ra
 
 vertical_draw:
@@ -86,11 +90,11 @@ jr $ra
 
 horizontal_draw:
 li $s2,0
-li $t3,93
+li $s3,93
 li $t6,1
 
 for_horizontal_draw:	
-	slt $s4,$s2,$t3
+	slt $s4,$s2,$s3
 	beq $s4,$zero,end_for_horizontal_draw
 		base:
             li $t5,2
