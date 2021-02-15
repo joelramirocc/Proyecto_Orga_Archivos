@@ -22,37 +22,26 @@ str9: .byte "   |____________________|   ||", 0
 ;horizontal extra = t3,t4
 
 draw:
-addi $sp,$sp,-240
-addi $t9,$sp,228
-sw $ra,236($sp)
-move $a0,$sp
-move $s6,$sp
-li $t0,37
-sw $t0,224($sp)
-li $t0,28
-sw $t0,228($sp)
-li $t0,41
-sw $t0,232($sp)
+addi $sp,$sp,-4
+sw $ra,0($sp)
+move $s6,$a0
 
-li $a1,56
-jal function_get_bloques
 li $a0,9
 li $v0,20
 syscall
 la $a0, str1 
 jal printString
-
 li $v0,21
 syscall
-
 li $a0,10
 jal printChar
 
 jal vertical_draw
-
-lw $ra,236($sp)
-addi $sp,$sp,240
+lw $ra,0($sp)
+addi $sp,$sp,4
 jr $ra
+
+
 
 vertical_draw:
 li $s0,0
