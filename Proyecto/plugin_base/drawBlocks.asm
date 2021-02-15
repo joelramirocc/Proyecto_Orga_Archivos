@@ -68,8 +68,8 @@ draw_ball:
 
         addi $sp,$sp,-4
         sw $ra,0($sp)
-        move $a0,$t1
-        li $v0,23
+        li $a0,9
+        li $v0,20
         syscall
         la $a0, 64
         jal printChar
