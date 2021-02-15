@@ -6,13 +6,27 @@ Str2: .byte "          ", 0
 Str3: .byte "<@@@@@@@@>", 0
 .text
 
+;////////////////////////////////////////////////
 ;a0=>linea
 ;a1=>columna
 ;a2=>arrayPos
 ;v0=>true
 ;$t2=>indexArray
+;esta la pelota en la linea = $t5 
+; pelota en la linea = $t6
+;////////////////////////////////////////////////
 
 draw_blocks:
+    li $t3,57
+    sll $t1, $t3,2
+    add $t1,$t1,$a2
+    lw $t1,0($t1)
+    li $t5,0
+    bne $t1,$a0, continue_validation
+    li $t5,1
+    j continue_validation;
+
+continue_validation:
     li $t2,0
     li $t0,1
     beq $a0,$t0,continue_draw
@@ -37,8 +51,40 @@ draw_blocks:
     beq $a0,$t0,continue_draw
     li $t0,29
     beq $a0,$t0,draw_nave
+    beq $t1,$a0,draw_ball
     li $v0,0
     j end_function
+
+draw_ball:
+    li $t3,58
+    sll $t1, $t3,2
+    add $t1,$t1,$a2
+    lw $t1,0($t1)
+    beq $t1,$a1,draw_ball_form
+    li $v0,0
+    j end_draw_ball
+
+    draw_ball_form:
+
+        addi $sp,$sp,-4
+        sw $ra,0($sp)
+        move $a0,$t1
+        li $v0,23
+        syscall
+        la $a0, 64
+        jal printChar
+        li $v0,21
+        syscall        
+        lw $ra,0($sp)
+        addi $sp,$sp,4
+
+
+    li $v0,2
+    j end_draw_ball
+
+    end_draw_ball:
+    j end_function
+
 
 continue_draw:
     li $t0,3

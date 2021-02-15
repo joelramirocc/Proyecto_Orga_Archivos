@@ -22,14 +22,18 @@ str9: .byte "   |____________________|   ||", 0
 ;horizontal extra = t3,t4
 
 draw:
-addi $sp,$sp,-232
+addi $sp,$sp,-240
 addi $t9,$sp,228
-#show  $t9
-sw $ra,228($sp)
+sw $ra,236($sp)
 move $a0,$sp
 move $s6,$sp
 li $t0,37
 sw $t0,224($sp)
+li $t0,28
+sw $t0,228($sp)
+li $t0,41
+sw $t0,232($sp)
+
 li $a1,56
 jal function_get_bloques
 li $a0,9
@@ -46,8 +50,8 @@ jal printChar
 
 jal vertical_draw
 
-lw $ra,228($sp)
-addi $sp,$sp,232
+lw $ra,236($sp)
+addi $sp,$sp,240
 jr $ra
 
 vertical_draw:
@@ -162,6 +166,8 @@ for_horizontal_draw:
                 lw $ra,0($sp)
                 addi $sp,$sp,4
                 move $t7,$v0
+                li $t0,2
+                beq $t7,$t0,EndBase
                 bne $t7,$zero,found_block
                 addi $sp,$sp,-4
                 sw $ra,0($sp)
@@ -169,6 +175,7 @@ for_horizontal_draw:
                 jal printChar
                 lw $ra,0($sp)
                 addi $sp,$sp,4
+                j EndBase
                 j EndBase
             found_block:
                 addi $s2,$s2,9
