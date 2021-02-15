@@ -17,9 +17,6 @@ str8: .byte "   |      ROUND:01      |   ||", 0
 str9: .byte "   |____________________|   ||", 0
 .text
 
-;vertical = t0,t1
-;horizontal=t1,t2
-;horizontal extra = t3,t4
 
 draw:
 addi $sp,$sp,-4
@@ -87,12 +84,12 @@ li $s3,93
 li $t6,1
 
 for_horizontal_draw:	
-	slt $s4,$s2,$s3
-	beq $s4,$zero,end_for_horizontal_draw
+	slt $t2,$s2,$s3
+	beq $t2,$zero,end_for_horizontal_draw
 		base:
             li $t5,2
-			slt $s4,$s2,$t5
-			beq $s4,$zero,NoBase
+			slt $t2,$s2,$t5
+			beq $t2,$zero,NoBase
                 addi $sp,$sp,-4
                 sw $ra,0($sp)
 
