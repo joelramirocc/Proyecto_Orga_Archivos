@@ -23,7 +23,7 @@ extern "C" ErrorCode handleSyscall(uint32_t *regs, void *mem, MemoryMap *mem_map
         }
         case 22:
         {   
-            int result = 1 + (rand() % 3);
+            int result = (rand() % 4);
             regs[Register::v0] = result;
             return ErrorCode::Ok;
         }
@@ -37,6 +37,11 @@ extern "C" ErrorCode handleSyscall(uint32_t *regs, void *mem, MemoryMap *mem_map
         case 24:
         {
             rlutil::cls();
+            return ErrorCode::Ok;
+        }
+        case 25:
+        {
+            regs[Register::v0] = rlutil::getkey();
             return ErrorCode::Ok;
         }
         default:

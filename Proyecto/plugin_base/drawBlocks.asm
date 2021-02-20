@@ -161,21 +161,9 @@ no_nave_found:
  j end_function
 
 semi_end_Function:
-        addi $sp,$sp,-4
-        sw $ra,0($sp)
-        
-        move $a0,$t1
-        li $v0,20
-        syscall
-        la $a0, Str2 
-        jal printString
-        li $v0,21
-        syscall
-        
-        lw $ra,0($sp)
-        addi $sp,$sp,4
-        li $v0,1
-        j end_function
+li $v0,0
+j end_function
+
 end_function:
 jr $ra
 

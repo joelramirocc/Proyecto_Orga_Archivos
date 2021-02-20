@@ -26,9 +26,35 @@ sw $t0,232($sp)
 li $a1,56
 jal function_get_bloques
 
-move $a0,$sp
-jal draw
+jal principal_while
 
 lw $ra,244($sp)
 addi $sp,$sp,248
 jr $ra
+
+principal_while:
+    move $t0,$sp
+    addi $sp,$sp,-8
+    sw $ra,0($sp)
+    sw $s0,4($sp)
+    move $s0,$t0
+    j start_while
+
+start_while:
+    li $v0,24
+    syscall
+    move $a0,$s0
+    jal draw
+    li $v0,25
+    syscall
+    li $v0,25
+    syscall
+    li $t0,32
+    beq $t0,$v0,end_principal_while
+    j start_while
+
+end_principal_while:
+    lw $ra,0($sp)
+    lw $s0,4($sp)
+    addi $sp,$sp,8
+    jr $ra
