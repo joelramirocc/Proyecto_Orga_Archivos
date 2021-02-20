@@ -110,6 +110,7 @@ continue_draw:
     li $t0,80
     addi $t2,$t2,1
     beq $a1,$t0,continue_draw_block
+    beq $t1,$a0,draw_ball
     li $v0,0
     j end_function
 

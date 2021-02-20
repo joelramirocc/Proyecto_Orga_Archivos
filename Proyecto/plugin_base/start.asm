@@ -17,10 +17,10 @@ move $s6,$sp
 li $t0,37
 sw $t0,224($sp)
 ;                       guardar posicion en "y" del balon
-li $t0,24
+li $t0,2
 sw $t0,228($sp)
 ;                       guardar posicion en "x" del balon
-li $t0,3
+li $t0,13
 sw $t0,232($sp)
 ;                       asignar valores iniciales de los bloques
 li $a1,56
