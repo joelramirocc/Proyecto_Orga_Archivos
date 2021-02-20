@@ -38,14 +38,18 @@ principal_while:
     sw $ra,0($sp)
     sw $s0,4($sp)
     move $s0,$t0
+
+    li $v0,27
+    syscall
     j start_while
 
 start_while:
+
+    move $a0,$s0
     li $v0,24
     syscall
-    move $a0,$s0
     jal draw
-    li $v0,25
+    li $v0,24
     syscall
     li $v0,25
     syscall

@@ -145,6 +145,9 @@ draw_nave:
     add $t1,$t1,$a2
     lw $t1,0($t1)
     bne $t1,$a1,no_nave_found
+        li $v0,28
+        syscall        
+        
         addi $sp,$sp,-4
         sw $ra,0($sp)
         la $a0, Str3 
