@@ -18,7 +18,7 @@ extern "C" ErrorCode handleSyscall(uint32_t *regs, void *mem, MemoryMap *mem_map
         }
         case 21:
         {   
-            rlutil::setColor(rlutil::BLACK);
+            rlutil::setColor(13);
             return ErrorCode::Ok;
         }
         case 22:
@@ -52,8 +52,8 @@ extern "C" ErrorCode handleSyscall(uint32_t *regs, void *mem, MemoryMap *mem_map
         }
         case 27:
         {
-            rlutil::setBackgroundColor(rlutil::BLACK);
-            rlutil::setColor(rlutil::BLACK);
+            rlutil::setBackgroundColor(13);
+            rlutil::setColor(13);
             return ErrorCode::Ok;
         }
         case 28:
