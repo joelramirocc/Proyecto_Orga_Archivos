@@ -41,7 +41,7 @@ extern "C" ErrorCode handleSyscall(uint32_t *regs, void *mem, MemoryMap *mem_map
         }
         case 25:
         {
-            rlutil::msleep(600);
+            rlutil::msleep(200);
             regs[Register::v0] = rlutil::nb_getch();
             return ErrorCode::Ok;
         }

@@ -5,7 +5,7 @@ addi $sp,$sp,-248
 ;                       guardar apuntador
 sw $ra,244($sp)
 ;                       guardar angulo inicial del balon
-li $t0,2
+li $t0,4
 sw $t0,240($sp)
 ;                       guardar direccion del balon
 li $t0,-1
@@ -17,10 +17,10 @@ move $s6,$sp
 li $t0,37
 sw $t0,224($sp)
 ;                       guardar posicion en "y" del balon
-li $t0,28
+li $t0,26
 sw $t0,228($sp)
 ;                       guardar posicion en "x" del balon
-li $t0,40
+li $t0,24
 sw $t0,232($sp)
 ;                       asignar valores iniciales de los bloques
 li $a1,56
