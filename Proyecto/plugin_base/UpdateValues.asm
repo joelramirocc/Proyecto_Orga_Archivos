@@ -37,14 +37,12 @@ update_values:
     li $t4,1
     ;t5=1 cuando es menor, continuar dibujando, si es 1, calculos
     beq $t5,$t4,move_ball_calculate
-    li $t4,27
+    li $t4,28
     slt $t5,$t1,$t4
 
     bne $t5,$zero,move_ball_default
-    j move_ball_calculate
+    j move_ball_calculate_nave
 
-move_ball_calculate:
-    j end_update_values
 
 move_ball_default:
     add $t5,$t1,$t2
@@ -110,3 +108,60 @@ end_update_values:
     lw $ra,0($sp)
     addi $sp,$sp,-4
     jr $ra
+
+
+move_ball_calculate:
+    j end_update_values
+
+move_ball_calculate_nave:
+
+    li $t4,-1
+    beq $t2,$t4,move_ball_default
+
+    li $t4,56
+    sll $t4,$t4,2
+    add $t4,$t4,$a0
+    lw $t4,0($t4)
+
+    slt $t5, $t0,$t4
+    bne $t5,$zero,leave_live
+
+    addi $t6,$t4,10
+    slt $t5, $t0,$t6
+    beq $t5,$zero,leave_live
+
+
+    li $t5,-1
+    li $t2,59
+    sll $t2,$t2,2
+    add $t2,$t2,$a0
+    sw $t5,0($t2)
+
+
+    li $t5,27
+    ;escribir fila
+    li $t1,57
+    sll $t1,$t1,2
+    add $t1,$t1,$a0
+    sw $t5,0($t1)
+
+    ;actualizar angulo, dependiendo donde golpee el balon
+    ;addi $t5,$t4,4
+    li $t3,60
+    sll $t3,$t3,2
+    add $t3,$t3,$a0
+    sw $t3,0($t3)
+
+
+
+
+    ;nueva columna pendiente segun el angulo donde quede
+    add $t5,$t0,$t3
+    li $t0,58
+    sll $t0,$t0,2
+    add $t0,$t0,$a0
+    sw $t5,0($t0)
+
+    j end_update_values
+leave_live:
+    j end_update_values

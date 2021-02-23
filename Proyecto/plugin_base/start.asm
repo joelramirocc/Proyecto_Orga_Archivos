@@ -8,7 +8,7 @@ sw $ra,244($sp)
 li $t0,4
 sw $t0,240($sp)
 ;                       guardar direccion del balon
-li $t0,-1
+li $t0,1
 sw $t0,236($sp)
 ;                       guardar posicion del arreglo
 move $a0,$sp
@@ -17,10 +17,10 @@ move $s6,$sp
 li $t0,37
 sw $t0,224($sp)
 ;                       guardar posicion en "y" del balon
-li $t0,26
+li $t0,25
 sw $t0,228($sp)
 ;                       guardar posicion en "x" del balon
-li $t0,24
+li $t0,32
 sw $t0,232($sp)
 ;                       asignar valores iniciales de los bloques
 li $a1,56
@@ -62,3 +62,5 @@ end_principal_while:
     lw $s0,4($sp)
     addi $sp,$sp,8
     jr $ra
+
+    
