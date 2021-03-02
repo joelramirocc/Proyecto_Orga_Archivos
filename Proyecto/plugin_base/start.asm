@@ -14,7 +14,7 @@ sw $t0,236($sp)
 move $a0,$sp
 move $s6,$sp
 ;                       guardar posicion en "x" de la nave
-li $t0,37
+li $t0,34
 sw $t0,224($sp)
 ;                       guardar posicion en "y" del balon
 li $t0,25
@@ -49,9 +49,11 @@ start_while:
     beq $t0,$v0,end_principal_while  
 
     move $a0,$s0
+    move $a1,$v0
     li $v0,24
     syscall
     jal update_values
+    
     jal draw
     li $v0,24
     syscall

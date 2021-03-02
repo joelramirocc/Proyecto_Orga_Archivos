@@ -5,6 +5,7 @@ update_values:
     addi $sp,$sp,4
     sw $ra,0($sp)
 
+    jal update_nave
     ;obtener columna
     li $t0,58
     sll $t0,$t0,2
@@ -43,6 +44,58 @@ update_values:
     bne $t5,$zero,move_ball_default
     j move_ball_calculate_nave
 
+
+update_nave:
+#show $a1
+        li $t4,56
+        sll $t4,$t4,2
+        add $t4,$t4,$a0
+        lw $t4,0($t4)
+     
+    li $t0,97
+    beq $a1,$t0,left_update_nave
+
+    li $t0,100
+    beq $a1,$t0,rigth_update_nave
+
+        j end_update_nave
+
+left_update_nave:
+    addi $t5,$t4,-3
+    li $t7,2
+    slt $t6,$t5,$t7
+    beq $t6,$zero,write_left_value
+    j resolve_left_min
+
+    resolve_left_min:
+        li $t5,2
+        j write_left_value
+
+    write_left_value:
+        li $t4,56
+        sll $t4,$t4,2
+        add $t4,$t4,$a0
+        sw $t5,0($t4)
+    j end_update_nave
+rigth_update_nave:
+    addi $t5,$t4,3
+    li $t7,81
+    slt $t6,$t5,$t7
+    beq $t6,$zero,resolve_rigth_min
+    j write_left_value
+
+    resolve_rigth_min:
+        li $t5,81
+        j write_rigth_value
+    write_rigth_value:
+        li $t4,56
+        sll $t4,$t4,2
+        add $t4,$t4,$a0
+        sw $t5,0($t4)
+    j end_update_nave
+
+end_update_nave:
+jr $ra
 
 move_ball_default:
     add $t5,$t1,$t2
