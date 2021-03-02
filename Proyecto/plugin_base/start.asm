@@ -43,6 +43,10 @@ principal_while:
     j start_while
 
 start_while:
+    li $v0,25
+    syscall
+    li $t0,32
+    beq $t0,$v0,end_principal_while  
 
     move $a0,$s0
     li $v0,24
@@ -51,10 +55,6 @@ start_while:
     jal draw
     li $v0,24
     syscall
-    li $v0,25
-    syscall
-    li $t0,32 
-    beq $t0,$v0,end_principal_while
     j start_while
 
 end_principal_while:

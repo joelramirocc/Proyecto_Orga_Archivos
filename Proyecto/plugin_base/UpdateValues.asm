@@ -117,7 +117,7 @@ move_ball_calculate_nave:
 
     li $t4,-1
     beq $t2,$t4,move_ball_default
-
+     
     li $t4,56
     sll $t4,$t4,2
     add $t4,$t4,$a0
@@ -146,21 +146,48 @@ move_ball_calculate_nave:
     sw $t5,0($t1)
 
     ;actualizar angulo, dependiendo donde golpee el balon
-    ;addi $t5,$t4,4
-    li $t3,60
-    sll $t3,$t3,2
-    add $t3,$t3,$a0
-    sw $t3,0($t3)
+    ;t4 = posicion inicial de la nave
+    addi $t5,$t4,4
+    slt $t5,$t0,$t5
+    bne $t5,$zero,less_angle
+    
+    addi $t5,$t4,6
+    slt $t5,$t0,$t5
+    bne $t5,$zero,regular_angle
+
+    j more_angle
+    
+    regular_angle:
+        li $t5,0
+        li $t3,60
+        sll $t3,$t3,2
+        add $t3,$t3,$a0
+        sw $t5,0($t3)
+        j continue_move_ball_calculate_nave
+    less_angle:
+        li $t5,-4
+        li $t3,60
+        sll $t3,$t3,2
+        add $t3,$t3,$a0
+        sw $t5,0($t3)
+        j continue_move_ball_calculate_nave
+    more_angle:
+        li $t5,4
+        li $t3,60
+        sll $t3,$t3,2
+        add $t3,$t3,$a0
+        sw $t5,0($t3)
+        j continue_move_ball_calculate_nave
 
 
 
-
-    ;nueva columna pendiente segun el angulo donde quede
-    add $t5,$t0,$t3
+    continue_move_ball_calculate_nave:
+    add $t5,$t0,$t5
     li $t0,58
     sll $t0,$t0,2
     add $t0,$t0,$a0
     sw $t5,0($t0)
+
 
     j end_update_values
 leave_live:

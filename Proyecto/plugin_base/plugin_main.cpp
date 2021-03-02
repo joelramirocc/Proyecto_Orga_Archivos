@@ -43,6 +43,7 @@ extern "C" ErrorCode handleSyscall(uint32_t *regs, void *mem, MemoryMap *mem_map
         {
             rlutil::msleep(600);
             regs[Register::v0] = rlutil::nb_getch();
+            cout<<regs[Register::v0]<<endl;
             return ErrorCode::Ok;
         }
         case 26:
@@ -59,6 +60,11 @@ extern "C" ErrorCode handleSyscall(uint32_t *regs, void *mem, MemoryMap *mem_map
         case 28:
         {
             rlutil::setColor(rlutil::WHITE);
+            return ErrorCode::Ok;
+        }
+        case 29:
+        {
+            rlutil::msleep(600);
             return ErrorCode::Ok;
         }
         default:
