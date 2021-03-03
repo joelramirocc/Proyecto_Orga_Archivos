@@ -407,6 +407,12 @@ RLUTIL_INLINE int nb_getch(void) {
 	else return 0;
 }
 
+RLUTIL_INLINE int my_getch(void) {
+	if (kbhit()) return getkey();
+	else return 0;
+	
+}
+
 /// Function: getANSIColor
 /// Return ANSI color escape sequence for specified number 0-15.
 ///

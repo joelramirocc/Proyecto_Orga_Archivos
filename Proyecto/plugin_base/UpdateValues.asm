@@ -46,7 +46,6 @@ update_values:
 
 
 update_nave:
-#show $a1
         li $t4,56
         sll $t4,$t4,2
         add $t4,$t4,$a0

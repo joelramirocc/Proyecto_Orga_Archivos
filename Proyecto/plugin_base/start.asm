@@ -1,7 +1,11 @@
 .global start_game
 
 start_game:
-addi $sp,$sp,-248
+
+
+addi $sp,$sp,-256
+sw $s0,248($sp)
+sw $s1,252($sp)
 ;                       guardar apuntador
 sw $ra,244($sp)
 ;                       guardar angulo inicial del balon
@@ -25,11 +29,13 @@ sw $t0,232($sp)
 ;                       asignar valores iniciales de los bloques
 li $a1,56
 jal function_get_bloques
-
+li $s1,0
 jal principal_while
 
 lw $ra,244($sp)
-addi $sp,$sp,248
+lw $s0,248($sp)
+lw $s1,252($sp)
+addi $sp,$sp,256
 jr $ra
 
 principal_while:
@@ -45,18 +51,37 @@ principal_while:
 start_while:
     li $v0,25
     syscall
+    
+    li $t0,112
+    beq $t0,$v0,pause_state
+    
     li $t0,32
     beq $t0,$v0,end_principal_while  
+        j continue_while
 
+pause_state:
+    li $v0,29
+    syscall
+
+    bne $s1,$zero,no_pause
+            li $s1,1
+        j start_while    
+no_pause:
+    li $s1,0
+    j start_while
+
+
+continue_while:
+    bne $s1,$zero,start_while
     move $a0,$s0
     move $a1,$v0
     li $v0,24
     syscall
     jal update_values
     
-    jal draw
     li $v0,24
     syscall
+    jal draw
     j start_while
 
 end_principal_while:
