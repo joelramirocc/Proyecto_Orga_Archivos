@@ -49,6 +49,8 @@ principal_while:
     j start_while
 
 start_while:
+    li $v0,29
+    syscall
     li $v0,25
     syscall
     
@@ -72,6 +74,7 @@ no_pause:
 
 
 continue_while:
+    
     bne $s1,$zero,start_while
     move $a0,$s0
     move $a1,$v0

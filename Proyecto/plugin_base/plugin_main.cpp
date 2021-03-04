@@ -42,13 +42,12 @@ extern "C" ErrorCode handleSyscall(uint32_t *regs, void *mem, MemoryMap *mem_map
         }
         case 25:
         {
-            rlutil::msleep(600);
             // if(kbhit())
             //     {
             //         regs[Register::v0] = rlutil::getkey();
             //     }
 
-            regs[Register::v0] = rlutil::my_getch();
+            regs[Register::v0] = rlutil::nb_getch();
             return ErrorCode::Ok;
         }
         case 26:
@@ -69,7 +68,7 @@ extern "C" ErrorCode handleSyscall(uint32_t *regs, void *mem, MemoryMap *mem_map
         }
         case 29:
         {
-            rlutil::msleep(600);
+            rlutil::msleep(500);
             return ErrorCode::Ok;
         }
         default:
