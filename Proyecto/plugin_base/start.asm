@@ -16,7 +16,7 @@ sw $s1,252($sp)
 ;                       guardar apuntador
 sw $ra,244($sp)
 ;                       guardar angulo inicial del balon
-li $t0,-4
+li $t0,4
 sw $t0,240($sp)
 ;                       guardar direccion del balon
 li $t0,-1
@@ -28,7 +28,7 @@ move $s6,$sp
 li $t0,34
 sw $t0,224($sp)
 ;                       guardar posicion en "y" del balon
-li $t0,0
+li $t0,10
 sw $t0,228($sp)
 ;                       guardar posicion en "x" del balon
 li $t0,15
@@ -85,12 +85,12 @@ continue_while:
     bne $s1,$zero,start_while
     move $a0,$s0
     move $a1,$v0
-    li $v0,24
-    syscall
+    ;li $v0,24
+    ;syscall
     jal update_values
     
-    li $v0,24
-    syscall
+    ;li $v0,24
+    ;syscall
     jal draw
     j start_while
 

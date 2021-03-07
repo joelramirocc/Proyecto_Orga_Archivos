@@ -163,8 +163,6 @@ end_update_values:
     jr $ra
 
 
-move_ball_calculate:
-    j end_update_values
 
 move_ball_calculate_nave:
 
@@ -245,3 +243,94 @@ move_ball_calculate_nave:
     j end_update_values
 leave_live:
     j end_update_values
+
+
+move_ball_calculate:
+;t0 columna
+;t1 fila
+;t2 direccion
+;t3 angulo
+    li $t4,10
+    beq $t1,$t4,maybe_free_movement
+    j end_colisions
+
+maybe_free_movement:
+    li $t4,1
+    beq $t2,$t4,free_movement
+    j calculate_movement
+
+calculate_movement:
+    j end_colisions
+
+free_movement:
+    j move_ball_default
+
+end_colisions:
+    j end_update_values
+
+
+rebote_horizontal:
+    ;t0 columna
+    ;t1 fila
+    ;t2 direccion
+    ;t3 angulo
+    
+    li $t9,-1
+    mult $t2,$t9
+    mflo $t4
+    
+    li $t2,59
+    sll $t2,$t2,2
+    add $t2,$t2,$a0
+    sw $t4,0($t2)
+
+    j move_angle
+
+end_rebote_horizontal:
+    j end_colisions
+
+
+move_angle:
+ li $t4,4 
+    beq $t3,$t4, move_right_h
+    j move_left_h
+    move_left_h:
+        li $t4,7
+        slt $t4,$t0,$t4
+            beq $t4,$zero,move_default_left_h
+
+                li $t4,4
+                li $t3,60
+                sll $t3,$t3,2
+                add $t3,$t3,$a0
+                sw $t4,0($t3)
+
+                li $t4,2
+                j write_columna_h     
+            move_default_left_h:
+                add $t4,$t0,$t3
+                j write_columna_h
+    move_right_h:
+        li $t4,86
+        slt $t4,$t0,$t4
+            bne $t4,$zero,move_default_right_h
+
+                li $t4,-4
+                li $t3,60
+                sll $t3,$t3,2
+                add $t3,$t3,$a0
+                sw $t4,0($t3)
+
+                li $t4,90     
+                j write_columna_h
+            move_default_right_h:
+                add $t4,$t0,$t3
+                j write_columna_h
+
+write_columna_h:
+    ;escribir columna
+    li $t0,58
+    sll $t0,$t0,2
+    add $t0,$t0,$a0
+    sw $t4,0($t0)
+    j end_rebote_horizontal
