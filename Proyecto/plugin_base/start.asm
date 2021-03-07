@@ -1,18 +1,25 @@
 .global start_game
 
 start_game:
+addi $sp,$sp,-264
 
 
-addi $sp,$sp,-256
+;                       guardar vidas
+li $t0,2
+sw $t0,256($sp)
+;                       guardar puntos
+li $t0,0
+sw $t0,260($sp)
+
 sw $s0,248($sp)
 sw $s1,252($sp)
 ;                       guardar apuntador
 sw $ra,244($sp)
 ;                       guardar angulo inicial del balon
-li $t0,4
+li $t0,-4
 sw $t0,240($sp)
 ;                       guardar direccion del balon
-li $t0,1
+li $t0,-1
 sw $t0,236($sp)
 ;                       guardar posicion del arreglo
 move $a0,$sp
@@ -21,10 +28,10 @@ move $s6,$sp
 li $t0,34
 sw $t0,224($sp)
 ;                       guardar posicion en "y" del balon
-li $t0,25
+li $t0,0
 sw $t0,228($sp)
 ;                       guardar posicion en "x" del balon
-li $t0,32
+li $t0,15
 sw $t0,232($sp)
 ;                       asignar valores iniciales de los bloques
 li $a1,56
@@ -35,7 +42,7 @@ jal principal_while
 lw $ra,244($sp)
 lw $s0,248($sp)
 lw $s1,252($sp)
-addi $sp,$sp,256
+addi $sp,$sp,264
 jr $ra
 
 principal_while:

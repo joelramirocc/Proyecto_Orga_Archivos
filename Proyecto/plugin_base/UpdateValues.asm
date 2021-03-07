@@ -33,7 +33,8 @@ update_values:
     ;10-28
     ;$t0-$t3
 
-    li $t4,12
+    ;LIMITE INFERIOR
+    li $t4,11
     slt $t5,$t1,$t4
     li $t4,1
     ;t5=1 cuando es menor, continuar dibujando, si es 1, calculos
