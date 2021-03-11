@@ -4,21 +4,28 @@
 ;Jal print_str
 
 .data 
-Str1: .byte "texto ", 0
 str1: .byte "===========================================================================================================================", 0
 
 str2: .byte "          PLAYER 1          ||", 0
 str3: .byte "                            ||", 0
-str4: .byte "    ____________________    ||", 0
-str5: .byte "   |       SCORE        |   ||", 0
-str6: .byte "   |     0000000000     |   ||", 0
-str7: .byte "   |      LIVES:04      |   ||", 0
-str8: .byte "   |      ROUND:01      |   ||", 0
-str9: .byte "   |____________________|   ||", 0
+str4: .byte "    ________________________||", 0
+str5: .byte "   |       SCORE            ||", 0
+str6: .byte "   |     0000000000", 0
+str7: .byte "   |      LIVES:0", 0
+str10: .byte "          ||", 0
+str8: .byte "   |      ROUND:01          ||", 0      
+str9: .byte "   |________________________||", 0
 .text
 
 
 draw:
+
+    ;obtener vidas
+    li $t9,64
+    sll $t9,$t9,2
+    add $t9,$t9,$a0
+    lw $t8,0($t9)
+
 addi $sp,$sp,-24
 sw $ra,20($sp)
 sw $s0,16($sp)
@@ -304,10 +311,25 @@ sw $ra,0($sp)
     syscall
     la $a0, str7
     jal printString
+
+    move $a0,$t8
+    li $v0,11
+    jal printInt
+    la $a0, str10
+    jal printString
+    
     li $v0,21
     syscall
+
+    ;move $a0,$t8
+    ;li $v0,11
+    ;jal printChar
+    
+
 lw $ra,0($sp)
 addi $sp,$sp,4
+
+;-----------------------------------------------
 j end_horizontal_extra_draw
 
 
