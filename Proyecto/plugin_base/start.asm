@@ -5,7 +5,7 @@ addi $sp,$sp,-264
 
 
 ;                       guardar vidas
-li $t0,2
+li $t0,3
 sw $t0,256($sp)
 ;                       guardar puntos
 li $t0,0
@@ -19,7 +19,7 @@ sw $ra,244($sp)
 li $t0,4
 sw $t0,240($sp)
 ;                       guardar direccion del balon
-li $t0,-1
+li $t0,1
 sw $t0,236($sp)
 ;                       guardar posicion del arreglo
 move $a0,$sp
@@ -28,7 +28,7 @@ move $s6,$sp
 li $t0,34
 sw $t0,224($sp)
 ;                       guardar posicion en "y" del balon
-li $t0,0
+li $t0,28
 sw $t0,228($sp)
 ;                       guardar posicion en "x" del balon
 li $t0,15
@@ -56,6 +56,8 @@ principal_while:
     j start_while
 
 start_while:
+    lw $t9,264($sp)
+    beq $t9,$zero,end_principal_while
     li $v0,29
     syscall
     li $v0,25

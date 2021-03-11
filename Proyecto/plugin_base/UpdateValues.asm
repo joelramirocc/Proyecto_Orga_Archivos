@@ -29,10 +29,6 @@ update_values:
     sll $t3,$t3,2
     add $t3,$t3,$a0
     lw $t3,0($t3)
-    #show $t0 signed decimal
-    #show $t1 signed decimal
-    #show $t2 signed decimal
-    #show $t3 signed decimal
 
     ;10-28
     ;$t0-$t3
@@ -251,6 +247,13 @@ move_ball_calculate_nave:
 
     j end_update_values
 leave_live:
+    ;obtener vidas
+    li $t9,64
+    sll $t9,$t9,2
+    add $t9,$t9,$a0
+    lw $t8,0($t9)
+    addi $t8,$t8,-1
+    sw $t8,0($t9)
     j end_update_values
 
 
