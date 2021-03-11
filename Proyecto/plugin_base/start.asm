@@ -28,7 +28,7 @@ move $s6,$sp
 li $t0,34
 sw $t0,224($sp)
 ;                       guardar posicion en "y" del balon
-li $t0,10
+li $t0,0
 sw $t0,228($sp)
 ;                       guardar posicion en "x" del balon
 li $t0,15

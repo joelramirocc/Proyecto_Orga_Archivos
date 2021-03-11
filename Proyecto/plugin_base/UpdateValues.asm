@@ -29,9 +29,18 @@ update_values:
     sll $t3,$t3,2
     add $t3,$t3,$a0
     lw $t3,0($t3)
+    #show $t0 signed decimal
+    #show $t1 signed decimal
+    #show $t2 signed decimal
+    #show $t3 signed decimal
 
     ;10-28
     ;$t0-$t3
+
+    li $t4,0
+    beq $t1,$t4,maybe_rebote_horizontal
+
+
 
     ;LIMITE INFERIOR
     li $t4,11
@@ -274,63 +283,32 @@ rebote_horizontal:
     ;t1 fila
     ;t2 direccion
     ;t3 angulo
-    
+    ;cambio de direccion
     li $t9,-1
     mult $t2,$t9
     mflo $t4
-    
     li $t2,59
     sll $t2,$t2,2
     add $t2,$t2,$a0
     sw $t4,0($t2)
 
-    j move_angle
+
+    ; cambio de angulo
+    mult $t3,$t9
+    mflo $t4
+
+    li $t3,60
+    sll $t3,$t3,2
+    add $t3,$t3,$a0
+    sw $t4,0($t3)
+
 
 end_rebote_horizontal:
     j end_colisions
 
 
-move_angle:
- li $t4,4 
-    beq $t3,$t4, move_right_h
-    j move_left_h
-    move_left_h:
-        li $t4,7
-        slt $t4,$t0,$t4
-            beq $t4,$zero,move_default_left_h
-
-                li $t4,4
-                li $t3,60
-                sll $t3,$t3,2
-                add $t3,$t3,$a0
-                sw $t4,0($t3)
-
-                li $t4,2
-                j write_columna_h     
-            move_default_left_h:
-                add $t4,$t0,$t3
-                j write_columna_h
-    move_right_h:
-        li $t4,86
-        slt $t4,$t0,$t4
-            bne $t4,$zero,move_default_right_h
-
-                li $t4,-4
-                li $t3,60
-                sll $t3,$t3,2
-                add $t3,$t3,$a0
-                sw $t4,0($t3)
-
-                li $t4,90     
-                j write_columna_h
-            move_default_right_h:
-                add $t4,$t0,$t3
-                j write_columna_h
-
-write_columna_h:
-    ;escribir columna
-    li $t0,58
-    sll $t0,$t0,2
-    add $t0,$t0,$a0
-    sw $t4,0($t0)
-    j end_rebote_horizontal
+maybe_rebote_horizontal:
+    ;t2 => direccion
+    li $t4,-1
+    beq $t2,$t4,rebote_horizontal
+    j move_ball_calculate_nave
