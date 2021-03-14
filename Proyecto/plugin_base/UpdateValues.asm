@@ -36,6 +36,10 @@ update_values:
     li $t4,0
     beq $t1,$t4,maybe_rebote_horizontal
 
+    li $t4,1
+    beq $t1,$t4,maybe_rebote_horizontal_colision
+
+    
 
 
     ;LIMITE INFERIOR
@@ -296,21 +300,21 @@ rebote_horizontal:
     add $t2,$t2,$a0
     sw $t4,0($t2)
     move $t2,$t4
-
-    li $t9,1
-    beq $t3,$t9,maybe_left_change
-    li $t9,0
-    beq $t3,$t9,maybe_left_change
-    li $t9,89
-    beq $t3,$t9,maybe_right_change
-    li $t9,90
-    beq $t3,$t9,maybe_right_change
+    
+    li $t9,7
+    slt $t9,$t0,$t9
+    li $t8,1
+    beq $t9,$t8,maybe_left_change
+    
+    li $t9,86
+    slt $t9,$t0,$t9
+    beq $t9,$zero,maybe_right_change
     j cambio_columna
 
 
     maybe_right_change:
-    li $t9,-1
-    beq $t2,$t9,right_change
+    li $t9,4
+    beq $t3,$t9,right_change
         j cambio_columna
 
     right_change:
@@ -323,11 +327,11 @@ rebote_horizontal:
         sll $t3,$t3,2
         add $t3,$t3,$a0
         sw $t4,0($t3)        
-        j cambio_columna
+        j end_rebote_horizontal
 
     maybe_left_change:
-    li $t9,1
-    beq $t2,$t9,left_change
+    li $t9,-4
+    beq $t3,$t9,left_change
         j cambio_columna
 
     left_change:
@@ -340,7 +344,7 @@ rebote_horizontal:
         sll $t3,$t3,2
         add $t3,$t3,$a0
         sw $t4,0($t3)
-        j cambio_columna
+        j end_rebote_horizontal
 
 
 cambio_columna:
@@ -355,8 +359,27 @@ cambio_columna:
 end_rebote_horizontal:
     j end_colisions
 
+
 maybe_rebote_horizontal:
     ;t2 => direccion
     li $t4,-1
     beq $t2,$t4,rebote_horizontal
-    j move_ball_calculate_nave
+    j colision_horizontal_abajo
+
+
+
+colision_horizontal_abajo:
+    
+    j end_maybe_rebote_horizontal_colision
+
+colision_horizontal_abajo_left:
+    j end_maybe_rebote_horizontal_colision
+    
+colision_horizontal_abajo_rigth:
+    j end_maybe_rebote_horizontal_colision
+
+
+maybe_rebote_horizontal_colision:
+    j end_maybe_rebote_horizontal_colision
+end_maybe_rebote_horizontal_colision:
+    j end_colisions

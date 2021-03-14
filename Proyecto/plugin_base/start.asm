@@ -19,7 +19,7 @@ sw $ra,244($sp)
 li $t0,4
 sw $t0,240($sp)
 ;                       guardar direccion del balon
-li $t0,1
+li $t0,-1
 sw $t0,236($sp)
 ;                       guardar posicion del arreglo
 move $a0,$sp
@@ -28,10 +28,10 @@ move $s6,$sp
 li $t0,34
 sw $t0,224($sp)
 ;                       guardar posicion en "y" del balon
-li $t0,28
+li $t0,0
 sw $t0,228($sp)
 ;                       guardar posicion en "x" del balon
-li $t0,15
+li $t0,13
 sw $t0,232($sp)
 ;                       asignar valores iniciales de los bloques
 li $a1,56
@@ -53,8 +53,8 @@ principal_while:
     move $s0,$t0
     li $v0,27
     syscall
+    jal draw
     j start_while
-
 start_while:
     lw $t9,264($sp)
     beq $t9,$zero,end_principal_while
