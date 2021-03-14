@@ -6,15 +6,14 @@
 .data 
 str1: .byte "===========================================================================================================================", 0
 
-str2: .byte "          PLAYER 1          ||", 0
-str3: .byte "                            ||", 0
-str4: .byte "    ________________________||", 0
-str5: .byte "   |       SCORE            ||", 0
-str6: .byte "   |     0000000000", 0
-str7: .byte "   |      LIVES:0", 0
-str10: .byte "          ||", 0
-str8: .byte "   |      ROUND:01          ||", 0      
-str9: .byte "   |________________________||", 0
+str2: .byte "          PLAYER 1           X", 0
+str3: .byte "                             X", 0
+str4: .byte "_____________________________X", 0
+str5: .byte "          SCORE            ", 0
+str6: .byte "        0000000000", 0
+str7: .byte "         LIVES:0", 0
+str8: .byte "         ROUND:01          ", 0      
+str9: .byte "_____________________________", 0
 .text
 
 
@@ -315,8 +314,6 @@ sw $ra,0($sp)
     move $a0,$t8
     li $v0,11
     jal printInt
-    la $a0, str10
-    jal printString
     
     li $v0,21
     syscall

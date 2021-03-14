@@ -286,6 +286,7 @@ rebote_horizontal:
     ;t1 fila
     ;t2 direccion
     ;t3 angulo
+
     ;cambio de direccion
     li $t9,-1
     mult $t2,$t9
@@ -294,21 +295,65 @@ rebote_horizontal:
     sll $t2,$t2,2
     add $t2,$t2,$a0
     sw $t4,0($t2)
+    move $t2,$t4
+
+    li $t9,1
+    beq $t3,$t9,maybe_left_change
+    li $t9,0
+    beq $t3,$t9,maybe_left_change
+    li $t9,89
+    beq $t3,$t9,maybe_right_change
+    li $t9,90
+    beq $t3,$t9,maybe_right_change
+    j cambio_columna
 
 
-    ; cambio de angulo
-    mult $t3,$t9
-    mflo $t4
+    maybe_right_change:
+    li $t9,-1
+    beq $t2,$t9,right_change
+        j cambio_columna
 
-    li $t3,60
-    sll $t3,$t3,2
-    add $t3,$t3,$a0
-    sw $t4,0($t3)
+    right_change:
+        ; cambio de angulo
+        li $t9,-1
+        mult $t3,$t9
+        mflo $t4
 
+        li $t3,60
+        sll $t3,$t3,2
+        add $t3,$t3,$a0
+        sw $t4,0($t3)        
+        j cambio_columna
+
+    maybe_left_change:
+    li $t9,1
+    beq $t2,$t9,left_change
+        j cambio_columna
+
+    left_change:
+        ; cambio de angulo
+        li $t9,-1
+        mult $t3,$t9
+        mflo $t4
+
+        li $t3,60
+        sll $t3,$t3,2
+        add $t3,$t3,$a0
+        sw $t4,0($t3)
+        j cambio_columna
+
+
+cambio_columna:
+    ;mover columna
+    add $t9,$t0,$t3
+    li $t0,58
+    sll $t0,$t0,2
+    add $t0,$t0,$a0
+    sw $t9,0($t0)
+    j end_rebote_horizontal
 
 end_rebote_horizontal:
     j end_colisions
-
 
 maybe_rebote_horizontal:
     ;t2 => direccion
