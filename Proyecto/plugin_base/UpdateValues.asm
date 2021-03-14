@@ -364,17 +364,32 @@ maybe_rebote_horizontal:
     ;t2 => direccion
     li $t4,-1
     beq $t2,$t4,rebote_horizontal
+    li $t4,1
     j colision_horizontal_abajo
 
 
+    ;t0 columna
+    ;t1 fila
+    ;t2 direccion
+    ;t3 angulo
+    ;t4 valor a mult para obtener la colision, es necesario en viarlo al momento de llamar a la funcion de colisiones
+
 
 colision_horizontal_abajo:
+    li $t9,-4
+    beq $t3,$t9,colision_horizontal_abajo_left
+    li $t9,4
+    beq $t3,$t9,colision_horizontal_abajo_rigth
+    j colision_horizontal_abajo_rect
+
+
+colision_horizontal_abajo_rect:
     
     j end_maybe_rebote_horizontal_colision
 
 colision_horizontal_abajo_left:
     j end_maybe_rebote_horizontal_colision
-    
+
 colision_horizontal_abajo_rigth:
     j end_maybe_rebote_horizontal_colision
 
