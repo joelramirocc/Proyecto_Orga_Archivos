@@ -4,7 +4,7 @@
 update_values:
     addi $sp,$sp,4
     sw $ra,0($sp)
-
+        
     jal update_nave
     ;obtener columna
     li $t0,58
@@ -384,6 +384,105 @@ colision_horizontal_abajo:
 
 
 colision_horizontal_abajo_rect:
+
+    ;ESPACIOS INTERMEDIOS
+    li $t8,1
+    li $t9,2
+    beq $t0,$t9,move_to_column_rect
+    li $t9,13
+    beq $t0,$t9,move_to_column_rect
+    
+    slt $t9,$t0,$t9
+    li $t5,0
+    beq $t9,$t8,colision_to_column_rect
+
+    li $t9,24
+    beq $t0,$t9,move_to_column_rect
+
+    slt $t9,$t0,$t9
+    li $t5,1
+    beq $t9,$t8,colision_to_column_rect
+
+    li $t9,35
+    beq $t0,$t9,move_to_column_rect
+
+    slt $t9,$t0,$t9
+    li $t5,2
+    beq $t9,$t8,colision_to_column_rect
+
+    li $t9,46
+    beq $t0,$t9,move_to_column_rect
+
+    slt $t9,$t0,$t9
+    li $t5,3
+    beq $t9,$t8,colision_to_column_rect
+    
+    li $t9,57
+    beq $t0,$t9,move_to_column_rect
+
+    slt $t9,$t0,$t9
+    li $t5,4
+    beq $t9,$t8,colision_to_column_rect
+    
+    li $t9,68
+    beq $t0,$t9,move_to_column_rect
+
+    slt $t9,$t0,$t9
+    li $t5,5
+    beq $t9,$t8,colision_to_column_rect
+    
+    li $t9,79
+    beq $t0,$t9,move_to_column_rect
+
+    slt $t9,$t0,$t9
+    li $t5,6
+    beq $t9,$t8,colision_to_column_rect
+    
+    li $t9,90
+    beq $t0,$t9,move_to_column_rect
+
+    slt $t9,$t0,$t9
+    li $t5,7
+    beq $t9,$t8,colision_to_column_rect
+    
+    ;ESPACIOS INTERMEDIOS FIN
+
+    j end_maybe_rebote_horizontal_colision
+
+colision_to_column_rect:
+    mult $t4,$t5
+    mflo $t8
+    li $t9,4
+    mult $t8,$t9
+    mflo $t8
+
+    addi $t8,$t8,4
+    add $t8,$t8,$sp
+    lw $t9,0($t8)
+    
+    beq $t9,$zero,move_to_column_rect
+    addi $t9,$t9,-1 ;ACTUALIZAR PUNTOS
+    sw $t9,0($t8)    
+    li $t9,-1
+    mult $t9,$t2
+    mflo $t9
+
+    li $t2,59
+    sll $t2,$t2,2
+    add $t2,$t2,$a0
+    sw $t9,0($t2)
+
+    j end_maybe_rebote_horizontal_colision
+
+move_to_column_rect:
+    li $t9,1
+    add $t9,$t1,$t9
+    ;actualizar fila
+    li $t1,57
+    sll $t1,$t1,2
+    add $t1,$t1,$a0
+    sw $t9,0($t1)
+    move $t1,$t9 
     
     j end_maybe_rebote_horizontal_colision
 

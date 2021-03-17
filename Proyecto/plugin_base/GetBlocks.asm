@@ -3,6 +3,7 @@
 ;a1 =>size
 
 function_get_bloquess:
+#show $a0
 jr $ra
 
 function_get_bloques:
