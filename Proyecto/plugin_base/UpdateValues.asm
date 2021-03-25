@@ -35,10 +35,23 @@ update_values:
     ;$t0-$t3
 
     ;#show
+    
+    li $t4,1
+    beq $t1,$t4,move_ball_default
+    li $t4,3
+    beq $t1,$t4,move_ball_default
+    li $t4,5
+    beq $t1,$t4,move_ball_default
+    li $t4,7
+    beq $t1,$t4,move_ball_default
+    li $t4,9
+    beq $t1,$t4,move_ball_default
+
+    
     li $t7,0
     li $t4,0
     beq $t1,$t4,maybe_rebote_horizontal
-
+    
     li $t7,1
     li $t4,1
     li $t5,2
@@ -516,7 +529,7 @@ colision_to_column_rect:
     mflo $t4
     add $t8,$t4,$t5
     add $t8,$t8,$t7
-    #show $t8
+    
     li $t9,4
     mult $t8,$t9
     mflo $t8
@@ -625,7 +638,7 @@ colision_to_column_left:
     mflo $t4
     add $t8,$t4,$t5
     add $t8,$t8,$t7
-    #show $t8
+    
     li $t9,4
     mult $t8,$t9
     mflo $t8
@@ -768,9 +781,7 @@ colision_to_column_rigth:
     mflo $t4
     add $t8,$t4,$t5
     add $t8,$t8,$t7
-    #show $t7 signed decimal
-    #show $t5
-    #show $t8
+    
     li $t9,4
     mult $t8,$t9
     mflo $t8
@@ -913,7 +924,7 @@ colision_to_column_rect_arriba:
     mflo $t4
     add $t8,$t4,$t5
     add $t8,$t8,$t7
-    #show $t8
+    
     li $t9,4
     mult $t8,$t9
     mflo $t8
@@ -1023,7 +1034,7 @@ colision_to_column_left_arriba:
     mflo $t4
     add $t8,$t4,$t5
     add $t8,$t8,$t7
-    #show $t8
+    
     li $t9,4
     mult $t8,$t9
     mflo $t8
@@ -1167,7 +1178,7 @@ colision_to_column_rigth_arriba:
     mflo $t4
     add $t8,$t4,$t5
     add $t8,$t8,$t7
-    #show $t8
+    
     li $t9,4
     mult $t8,$t9
     mflo $t8
