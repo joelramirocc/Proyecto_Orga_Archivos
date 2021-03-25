@@ -13,7 +13,8 @@ function_get_bloques:
         beq $t1,$zero,end_for
             li $v0,22
             syscall
-            move $t2,$v0
+            ;move $t2,$v0
+            li $t2,3
             sll $t3,$t0,2
             add $t3,$t3,$a0
             sw $t2,0($t3)

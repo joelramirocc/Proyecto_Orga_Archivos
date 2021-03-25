@@ -30,18 +30,38 @@ update_values:
     add $t3,$t3,$a0
     lw $t3,0($t3)
 
+
     ;10-28
     ;$t0-$t3
 
+    ;#show
+    li $t7,0
     li $t4,0
+    li $t5,0
+    beq $t1,$t4,maybe_rebote_horizontal
+    li $t4,3
+    li $t5,2
+    li $t7,1
     beq $t1,$t4,maybe_rebote_horizontal
 
-    li $t4,1
-    beq $t1,$t4,maybe_rebote_horizontal_colision
+    li $t5,5
+    li $t4,7
+    beq $t1,$t4,maybe_rebote_horizontal
+    
+    li $t5,7
+    li $t4,10
+    beq $t1,$t4,maybe_abajo
+    j c_n
+    maybe_abajo:
+    
+        li $t9,-1
+        beq $t2,$t9,maybe_rebote_horizontal
+
+    ;li $t4,1
+    ;beq $t1,$t4,maybe_rebote_horizontal_colision
 
     
-
-
+  c_n:
     ;LIMITE INFERIOR
     li $t4,11
     slt $t5,$t1,$t4
@@ -258,6 +278,40 @@ leave_live:
     lw $t8,0($t9)
     addi $t8,$t8,-1
     sw $t8,0($t9)
+    
+    ;obtener columna
+    li $t9,35
+    li $t0,58
+    sll $t0,$t0,2
+    add $t0,$t0,$a0
+    sw $t9,0($t0)
+
+    ;obtener fila
+    li $t9,28
+    li $t1,57
+    sll $t1,$t1,2
+    add $t1,$t1,$a0
+    sw $t9,0($t1)
+    
+    ;obtener direccion
+    li $t9,-1
+    li $t2,59
+    sll $t2,$t2,2
+    add $t2,$t2,$a0
+    sw $t9,0($t2)
+
+    li $t9,30
+    li $t4,56
+    sll $t4,$t4,2
+    add $t4,$t4,$a0
+    sw $t9,0($t4)
+
+    li $t9,4
+    li $t3,60
+    sll $t3,$t3,2
+    add $t3,$t3,$a0
+    sw $t9,0($t3)
+
     j end_update_values
 
 
@@ -362,12 +416,20 @@ end_rebote_horizontal:
 
 maybe_rebote_horizontal:
     ;t2 => direccion
-    li $t4,-1
-    beq $t2,$t4,rebote_horizontal
-    li $t4,1
+    li $t9,0
+    beq $t4,$t9,maybe_rebote_horizontal_top
+continue_maybe_rebote_horizontal:
+    move $t4,$t5
+    li $t9,-1
+    beq $t2,$t9,colision_horizontal_arriba
+;    addi $t4,$t4,1
     j colision_horizontal_abajo
 
 
+maybe_rebote_horizontal_top:
+    li $t4,-1
+    beq $t2,$t4,rebote_horizontal
+    j continue_maybe_rebote_horizontal
     ;t0 columna
     ;t1 fila
     ;t2 direccion
@@ -434,15 +496,20 @@ colision_horizontal_abajo_rect:
     j end_maybe_rebote_horizontal_colision
 
 colision_to_column_rect:
-    mult $t4,$t5
-    mflo $t8
+;==================================================================
+    li $t9,7
+    mult $t4,$t9 
+    mflo $t4
+    add $t8,$t4,$t5
+    add $t8,$t8,$t7
     li $t9,4
     mult $t8,$t9
     mflo $t8
-
     addi $t8,$t8,4
     add $t8,$t8,$sp
     lw $t9,0($t8)
+
+
     
     beq $t9,$zero,move_to_column_rect
     addi $t9,$t9,-1 ;ACTUALIZAR PUNTOS
@@ -536,15 +603,21 @@ colision_horizontal_abajo_left:
     ;t4 valor a mult para obtener la colision, es necesario en viarlo al momento de llamar a la funcion de colisiones
 
 colision_to_column_left: 
-    mult $t4,$t5
-    mflo $t8
+;==================================================================
+    li $t9,7
+    mult $t4,$t9 
+    mflo $t4
+    add $t8,$t4,$t5
+    add $t8,$t8,$t7
     li $t9,4
     mult $t8,$t9
     mflo $t8
-
     addi $t8,$t8,4
     add $t8,$t8,$sp
     lw $t9,0($t8)
+
+
+
 
     beq $t9,$zero,move_to_column_left_mov
     addi $t9,$t9,-1 ;ACTUALIZAR PUNTOS
@@ -671,15 +744,21 @@ colision_horizontal_abajo_rigth:
     ;t4 valor a mult para obtener la colision, es necesario en viarlo al momento de llamar a la funcion de colisiones
 
 colision_to_column_rigth: 
-    mult $t4,$t5
-    mflo $t8
+ ;==================================================================
+    li $t9,7
+    mult $t4,$t9 
+    mflo $t4
+    add $t8,$t4,$t5
+    add $t8,$t8,$t7
     li $t9,4
     mult $t8,$t9
     mflo $t8
-
     addi $t8,$t8,4
     add $t8,$t8,$sp
     lw $t9,0($t8)
+
+
+
 
     beq $t9,$zero,move_to_column_rigth_mov
     addi $t9,$t9,-1 ;ACTUALIZAR PUNTOS
@@ -744,3 +823,394 @@ maybe_rebote_horizontal_colision:
     j end_maybe_rebote_horizontal_colision
 end_maybe_rebote_horizontal_colision:
     j end_colisions
+
+
+
+
+colision_horizontal_arriba:
+    li $t9,-4
+    beq $t3,$t9,colision_horizontal_arriba_left
+    li $t9,4
+    beq $t3,$t9,colision_horizontal_arriba_rigth
+    j colision_horizontal_arriba_rect
+
+
+colision_horizontal_arriba_rect:
+
+    ;ESPACIOS INTERMEDIOS
+    li $t8,1
+    li $t9,2
+    beq $t0,$t9,move_to_column_rect_arriba
+    li $t9,13
+    beq $t0,$t9,move_to_column_rect_arriba
+    slt $t9,$t0,$t9
+    li $t5,0
+    beq $t9,$t8,colision_to_column_rect_arriba
+    li $t9,24
+    beq $t0,$t9,move_to_column_rect_arriba
+    slt $t9,$t0,$t9
+    li $t5,1
+    beq $t9,$t8,colision_to_column_rect_arriba
+    li $t9,35
+    beq $t0,$t9,move_to_column_rect_arriba
+    slt $t9,$t0,$t9
+    li $t5,2
+    beq $t9,$t8,colision_to_column_rect_arriba
+    li $t9,46
+    beq $t0,$t9,move_to_column_rect_arriba
+    slt $t9,$t0,$t9
+    li $t5,3
+    beq $t9,$t8,colision_to_column_rect_arriba
+    li $t9,57
+    beq $t0,$t9,move_to_column_rect_arriba
+    slt $t9,$t0,$t9
+    li $t5,4
+    beq $t9,$t8,colision_to_column_rect_arriba
+    li $t9,68
+    beq $t0,$t9,move_to_column_rect_arriba
+    slt $t9,$t0,$t9
+    li $t5,5
+    beq $t9,$t8,colision_to_column_rect_arriba
+    li $t9,79
+    beq $t0,$t9,move_to_column_rect_arriba
+    slt $t9,$t0,$t9
+    li $t5,6
+    beq $t9,$t8,colision_to_column_rect_arriba
+    li $t9,90
+    beq $t0,$t9,move_to_column_rect_arriba
+    slt $t9,$t0,$t9
+    li $t5,7
+    beq $t9,$t8,colision_to_column_rect_arriba
+    ;ESPACIOS INTERMEDIOS FIN
+
+    j end_maybe_rebote_horizontal_colision
+
+colision_to_column_rect_arriba:
+    ;==================================================================
+    li $t9,7
+    mult $t4,$t9 
+    mflo $t4
+    add $t8,$t4,$t5
+    add $t8,$t8,$t7
+    li $t9,4
+    mult $t8,$t9
+    mflo $t8
+    addi $t8,$t8,4
+    add $t8,$t8,$sp
+    lw $t9,0($t8)
+
+
+    
+    beq $t9,$zero,move_to_column_rect_arriba
+    addi $t9,$t9,-1 ;ACTUALIZAR PUNTOS
+    sw $t9,0($t8)    
+    li $t9,-1
+    mult $t9,$t2
+    mflo $t9
+
+    li $t9,1
+    li $t2,59
+    sll $t2,$t2,2
+    add $t2,$t2,$a0
+    sw $t9,0($t2)
+
+    j end_maybe_rebote_horizontal_colision
+
+move_to_column_rect_arriba:
+    li $t9,-1
+    add $t9,$t1,$t9
+    ;actualizar fila
+    li $t1,57
+    sll $t1,$t1,2
+    add $t1,$t1,$a0
+    sw $t9,0($t1)
+    move $t1,$t9     
+    j end_maybe_rebote_horizontal_colision
+
+
+
+    ;t0 columna
+    ;t1 fila
+    ;t2 direccion
+    ;t3 angulo
+    ;t4 valor a mult para obtener la colision, es necesario en viarlo al momento de llamar a la funcion de colisiones
+
+colision_horizontal_arriba_left:
+    
+    ;ESPACIOS INTERMEDIOS
+    li $t8,1
+    li $t9,2
+    beq $t0,$t9,move_to_column_left_arriba
+    li $t9,13
+    beq $t0,$t9,move_to_column_left_arriba
+    slt $t9,$t0,$t9
+    li $t5,0
+    beq $t9,$t8,colision_to_column_left_arriba
+    li $t9,24
+    beq $t0,$t9,move_to_column_left_arriba
+    slt $t9,$t0,$t9
+    li $t5,1
+    beq $t9,$t8,colision_to_column_left_arriba
+    li $t9,35
+    beq $t0,$t9,move_to_column_left_arriba
+    slt $t9,$t0,$t9
+    li $t5,2
+    beq $t9,$t8,colision_to_column_left_arriba
+    li $t9,46
+    beq $t0,$t9,move_to_column_left_arriba
+    slt $t9,$t0,$t9
+    li $t5,3
+    beq $t9,$t8,colision_to_column_left_arriba
+    li $t9,57
+    beq $t0,$t9,move_to_column_left_arriba
+    slt $t9,$t0,$t9
+    li $t5,4
+    beq $t9,$t8,colision_to_column_left_arriba
+    li $t9,68
+    beq $t0,$t9,move_to_column_left_arriba
+    slt $t9,$t0,$t9
+    li $t5,5
+    beq $t9,$t8,colision_to_column_left_arriba
+    li $t9,79
+    beq $t0,$t9,move_to_column_left_arriba
+    slt $t9,$t0,$t9
+    li $t5,6
+    beq $t9,$t8,colision_to_column_left_arriba
+    li $t9,90
+    beq $t0,$t9,move_to_column_left_arriba
+    slt $t9,$t0,$t9
+    li $t5,7
+    beq $t9,$t8,colision_to_column_left_arriba
+    ;ESPACIOS INTERMEDIOS FIN
+
+
+    j end_maybe_rebote_horizontal_colision
+
+
+    ;t0 columna
+    ;t1 fila
+    ;t2 direccion
+    ;t3 angulo
+    ;t4 valor a mult para obtener la colision, es necesario en viarlo al momento de llamar a la funcion de colisiones
+
+colision_to_column_left_arriba: 
+    ;==================================================================
+    li $t9,7
+    mult $t4,$t9 
+    mflo $t4
+    add $t8,$t4,$t5
+    add $t8,$t8,$t7
+    li $t9,4
+    mult $t8,$t9
+    mflo $t8
+    addi $t8,$t8,4
+    add $t8,$t8,$sp
+    lw $t9,0($t8)
+
+
+
+    beq $t9,$zero,move_to_column_left_mov_arriba
+    addi $t9,$t9,-1 ;ACTUALIZAR PUNTOS
+    sw $t9,0($t8)    
+    li $t9,-1
+    mult $t9,$t2
+    mflo $t9
+
+    li $t9,1
+    li $t2,59
+    sll $t2,$t2,2
+    add $t2,$t2,$a0
+    sw $t9,0($t2)
+    li $t9,-4
+    add $t9,$t9,$t0
+    ;actualizar columna
+    li $t0,58
+    sll $t0,$t0,2
+    add $t0,$t0,$a0
+    sw $t9,0($t0)
+    j end_maybe_rebote_horizontal_colision
+
+    ;t0 columna
+    ;t1 fila
+    ;t2 direccion
+    ;t3 angulo
+    ;t4 valor a mult para obtener la colision, es necesario en viarlo al momento de llamar a la funcion de colisiones
+
+move_to_column_left_mov_arriba:
+    li $t9,-1
+    add $t9,$t9,$t0
+
+    ;actualizar columna
+    li $t0,58
+    sll $t0,$t0,2
+    add $t0,$t0,$a0
+    sw $t9,0($t0)
+    j move_to_column_left_arriba
+
+move_to_column_left_arriba:
+
+    li $t9,-1
+    add $t9,$t1,$t9
+    ;actualizar fila
+    li $t1,57
+    sll $t1,$t1,2
+    add $t1,$t1,$a0
+    sw $t9,0($t1)
+    move $t1,$t9
+
+    li $t9,-1
+    mult $t9,$t3
+    mflo $t9
+
+    ;actualizar angulo
+    li $t3,60
+    sll $t3,$t3,2
+    add $t3,$t3,$a0
+    sw $t9,0($t3)
+    j end_maybe_rebote_horizontal_colision
+
+
+
+    ;t0 columna
+    ;t1 fila
+    ;t2 direccion
+    ;t3 angulo
+    ;t4 valor a mult para obtener la colision, es necesario en viarlo al momento de llamar a la funcion de colisiones
+
+colision_horizontal_arriba_rigth:
+    
+    ;ESPACIOS INTERMEDIOS
+    li $t8,1
+    li $t9,2
+    beq $t0,$t9,move_to_column_rigth_arriba
+    li $t9,13
+    beq $t0,$t9,move_to_column_rigth_arriba
+    slt $t9,$t0,$t9
+    li $t5,0
+    beq $t9,$t8,colision_to_column_rigth_arriba
+    li $t9,24
+    beq $t0,$t9,move_to_column_rigth_arriba
+    slt $t9,$t0,$t9
+    li $t5,1
+    beq $t9,$t8,colision_to_column_rigth_arriba
+    li $t9,35
+    beq $t0,$t9,move_to_column_rigth_arriba
+    slt $t9,$t0,$t9
+    li $t5,2
+    beq $t9,$t8,colision_to_column_rigth_arriba
+    li $t9,46
+    beq $t0,$t9,move_to_column_rigth_arriba
+    slt $t9,$t0,$t9
+    li $t5,3
+    beq $t9,$t8,colision_to_column_rigth_arriba
+    li $t9,57
+    beq $t0,$t9,move_to_column_rigth_arriba
+    slt $t9,$t0,$t9
+    li $t5,4
+    beq $t9,$t8,colision_to_column_rigth_arriba
+    li $t9,68
+    beq $t0,$t9,move_to_column_rigth_arriba
+    slt $t9,$t0,$t9
+    li $t5,5
+    beq $t9,$t8,colision_to_column_rigth_arriba
+    li $t9,79
+    beq $t0,$t9,move_to_column_rigth_arriba
+    slt $t9,$t0,$t9
+    li $t5,6
+    beq $t9,$t8,colision_to_column_rigth_arriba
+    li $t9,90
+    beq $t0,$t9,move_to_column_rigth_arriba
+    slt $t9,$t0,$t9
+    li $t5,7
+    beq $t9,$t8,colision_to_column_rigth_arriba
+    ;ESPACIOS INTERMEDIOS FIN
+
+
+    j end_maybe_rebote_horizontal_colision
+
+
+    ;t0 columna
+    ;t1 fila
+    ;t2 direccion
+    ;t3 angulo
+    ;t4 valor a mult para obtener la colision, es necesario en viarlo al momento de llamar a la funcion de colisiones
+
+colision_to_column_rigth_arriba: 
+  ;==================================================================
+    li $t9,7
+    mult $t4,$t9 
+    mflo $t4
+    add $t8,$t4,$t5
+    add $t8,$t8,$t7
+    li $t9,4
+    mult $t8,$t9
+    mflo $t8
+    addi $t8,$t8,4
+    add $t8,$t8,$sp
+    lw $t9,0($t8)
+
+    beq $t9,$zero,move_to_column_rigth_mov_arriba
+    addi $t9,$t9,-1 ;ACTUALIZAR PUNTOS
+    
+    sw $t9,0($t8)    
+    li $t9,-1
+    mult $t9,$t2
+    mflo $t9
+    
+    li $t9,1
+    li $t2,59
+    sll $t2,$t2,2
+    add $t2,$t2,$a0
+    sw $t9,0($t2)
+    li $t9,4
+    add $t9,$t9,$t0
+    ;actualizar columna
+    li $t0,58
+    sll $t0,$t0,2
+    add $t0,$t0,$a0
+    sw $t9,0($t0)
+    j end_maybe_rebote_horizontal_colision
+
+    ;t0 columna
+    ;t1 fila
+    ;t2 direccion
+    ;t3 angulo
+    ;t4 valor a mult para obtener la colision, es necesario en viarlo al momento de llamar a la funcion de colisiones
+
+move_to_column_rigth_mov_arriba:
+    li $t9,1
+    add $t9,$t9,$t0
+
+    ;actualizar columna
+    li $t0,58
+    sll $t0,$t0,2
+    add $t0,$t0,$a0
+    sw $t9,0($t0)
+    j move_to_column_rigth_arriba
+
+move_to_column_rigth_arriba:
+
+    li $t9,-1
+    add $t9,$t1,$t9
+    ;actualizar fila
+    li $t1,57
+    sll $t1,$t1,2
+    add $t1,$t1,$a0
+    sw $t9,0($t1)
+    move $t1,$t9
+
+    li $t9,-1
+    mult $t9,$t3
+    mflo $t9
+
+    ;actualizar angulo
+    li $t3,60
+    sll $t3,$t3,2
+    add $t3,$t3,$a0
+    sw $t9,0($t3)
+    j end_maybe_rebote_horizontal_colision
+
+
+
+
+
