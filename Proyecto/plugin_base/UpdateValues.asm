@@ -37,16 +37,29 @@ update_values:
     ;#show
     li $t7,0
     li $t4,0
-    li $t5,0
-    beq $t1,$t4,maybe_rebote_horizontal
-    li $t4,3
-    li $t5,2
-    li $t7,1
     beq $t1,$t4,maybe_rebote_horizontal
 
-    li $t5,5
-    li $t4,7
-    beq $t1,$t4,maybe_rebote_horizontal
+    li $t7,1
+    li $t4,1
+    li $t5,2
+    beq $t1,$t5,maybe_rebote_horizontal
+    
+    li $t4,2
+    li $t5,4
+    beq $t1,$t5,maybe_rebote_horizontal
+
+    li $t4,3
+    li $t5,6
+    beq $t1,$t5,maybe_rebote_horizontal
+
+    li $t4,4
+    li $t5,8
+    beq $t1,$t5,maybe_rebote_horizontal
+
+    li $t4,5
+    li $t5,10
+    beq $t1,$t5,maybe_rebote_horizontal
+
     
     li $t5,7
     li $t4,10
@@ -419,16 +432,17 @@ maybe_rebote_horizontal:
     li $t9,0
     beq $t4,$t9,maybe_rebote_horizontal_top
 continue_maybe_rebote_horizontal:
-    move $t4,$t5
-    li $t9,-1
-    beq $t2,$t9,colision_horizontal_arriba
+    ;move $t4,$t5
+    li $t9,1
+    beq $t2,$t9,colision_horizontal_abajo
+    li $t7,-7
 ;    addi $t4,$t4,1
-    j colision_horizontal_abajo
+    j colision_horizontal_arriba
 
 
 maybe_rebote_horizontal_top:
-    li $t4,-1
-    beq $t2,$t4,rebote_horizontal
+    li $t5,-1
+    beq $t2,$t5,rebote_horizontal
     j continue_maybe_rebote_horizontal
     ;t0 columna
     ;t1 fila
@@ -502,12 +516,14 @@ colision_to_column_rect:
     mflo $t4
     add $t8,$t4,$t5
     add $t8,$t8,$t7
+    #show $t8
     li $t9,4
     mult $t8,$t9
     mflo $t8
     addi $t8,$t8,4
     add $t8,$t8,$sp
     lw $t9,0($t8)
+
 
 
     
@@ -609,12 +625,14 @@ colision_to_column_left:
     mflo $t4
     add $t8,$t4,$t5
     add $t8,$t8,$t7
+    #show $t8
     li $t9,4
     mult $t8,$t9
     mflo $t8
     addi $t8,$t8,4
     add $t8,$t8,$sp
     lw $t9,0($t8)
+
 
 
 
@@ -750,6 +768,9 @@ colision_to_column_rigth:
     mflo $t4
     add $t8,$t4,$t5
     add $t8,$t8,$t7
+    #show $t7 signed decimal
+    #show $t5
+    #show $t8
     li $t9,4
     mult $t8,$t9
     mflo $t8
@@ -886,18 +907,20 @@ colision_horizontal_arriba_rect:
     j end_maybe_rebote_horizontal_colision
 
 colision_to_column_rect_arriba:
-    ;==================================================================
+;==================================================================
     li $t9,7
     mult $t4,$t9 
     mflo $t4
     add $t8,$t4,$t5
     add $t8,$t8,$t7
+    #show $t8
     li $t9,4
     mult $t8,$t9
     mflo $t8
     addi $t8,$t8,4
     add $t8,$t8,$sp
     lw $t9,0($t8)
+
 
 
     
@@ -994,18 +1017,20 @@ colision_horizontal_arriba_left:
     ;t4 valor a mult para obtener la colision, es necesario en viarlo al momento de llamar a la funcion de colisiones
 
 colision_to_column_left_arriba: 
-    ;==================================================================
+;==================================================================
     li $t9,7
     mult $t4,$t9 
     mflo $t4
     add $t8,$t4,$t5
     add $t8,$t8,$t7
+    #show $t8
     li $t9,4
     mult $t8,$t9
     mflo $t8
     addi $t8,$t8,4
     add $t8,$t8,$sp
     lw $t9,0($t8)
+
 
 
 
@@ -1136,18 +1161,21 @@ colision_horizontal_arriba_rigth:
     ;t4 valor a mult para obtener la colision, es necesario en viarlo al momento de llamar a la funcion de colisiones
 
 colision_to_column_rigth_arriba: 
-  ;==================================================================
+;==================================================================
     li $t9,7
     mult $t4,$t9 
     mflo $t4
     add $t8,$t4,$t5
     add $t8,$t8,$t7
+    #show $t8
     li $t9,4
     mult $t8,$t9
     mflo $t8
     addi $t8,$t8,4
     add $t8,$t8,$sp
     lw $t9,0($t8)
+
+
 
     beq $t9,$zero,move_to_column_rigth_mov_arriba
     addi $t9,$t9,-1 ;ACTUALIZAR PUNTOS
@@ -1209,8 +1237,3 @@ move_to_column_rigth_arriba:
     add $t3,$t3,$a0
     sw $t9,0($t3)
     j end_maybe_rebote_horizontal_colision
-
-
-
-
-

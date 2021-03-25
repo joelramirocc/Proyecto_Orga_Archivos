@@ -31,23 +31,17 @@ continue_validation:
     li $t0,1
     beq $a0,$t0,continue_draw
     li $t2,7
-    li $t0,2
+    li $t0,3
     beq $a0,$t0,continue_draw
     li $t2,15
-    li $t0,4
-    beq $a0,$t0,continue_draw
-    li $t2,22
     li $t0,5
     beq $a0,$t0,continue_draw
+    li $t2,22
+    li $t0,7
+    beq $a0,$t0,continue_draw
     li $t2,29
-    li $t0,6
-    li $t2,36
-    beq $a0,$t0,continue_draw
-    li $t2,36
-    li $t0,8
-    beq $a0,$t0,continue_draw
-    li $t2,43
     li $t0,9
+    li $t2,36
     beq $a0,$t0,continue_draw
     li $t0,29
     beq $a0,$t0,draw_nave
