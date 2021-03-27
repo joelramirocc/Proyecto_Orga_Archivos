@@ -68,7 +68,7 @@ extern "C" ErrorCode handleSyscall(uint32_t *regs, void *mem, MemoryMap *mem_map
         }
         case 29:
         {
-            rlutil::msleep(200);
+            rlutil::msleep(500);
             return ErrorCode::Ok;
         }
         default:

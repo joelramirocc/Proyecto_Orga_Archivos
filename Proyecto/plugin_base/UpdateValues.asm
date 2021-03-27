@@ -71,22 +71,14 @@ update_values:
 
     li $t4,5
     li $t5,10
-    beq $t1,$t5,maybe_rebote_horizontal
+    beq $t1,$t5,maybe_abajo
 
-    
-    li $t5,7
-    li $t4,10
-    beq $t1,$t4,maybe_abajo
     j c_n
     maybe_abajo:
-    
         li $t9,-1
         beq $t2,$t9,maybe_rebote_horizontal
-
-    ;li $t4,1
-    ;beq $t1,$t4,maybe_rebote_horizontal_colision
-
-    
+        j move_ball_default
+        
   c_n:
     ;LIMITE INFERIOR
     li $t4,11
@@ -152,9 +144,8 @@ rigth_update_nave:
 end_update_nave:
 jr $ra
 
-move_ball_default:
+move_ball_default: 
     add $t5,$t1,$t2
-
     ;escribir fila
     li $t1,57
     sll $t1,$t1,2
@@ -942,7 +933,6 @@ colision_to_column_rect_arriba:
     mult $t9,$t2
     mflo $t9
 
-    li $t9,1
     li $t2,59
     sll $t2,$t2,2
     add $t2,$t2,$a0
@@ -1052,7 +1042,6 @@ colision_to_column_left_arriba:
     mult $t9,$t2
     mflo $t9
 
-    li $t9,1
     li $t2,59
     sll $t2,$t2,2
     add $t2,$t2,$a0
@@ -1178,7 +1167,7 @@ colision_to_column_rigth_arriba:
     mflo $t4
     add $t8,$t4,$t5
     add $t8,$t8,$t7
-    
+
     li $t9,4
     mult $t8,$t9
     mflo $t8
@@ -1187,16 +1176,15 @@ colision_to_column_rigth_arriba:
     lw $t9,0($t8)
 
 
-
     beq $t9,$zero,move_to_column_rigth_mov_arriba
     addi $t9,$t9,-1 ;ACTUALIZAR PUNTOS
-    
+
+#show $t9    
     sw $t9,0($t8)    
     li $t9,-1
     mult $t9,$t2
     mflo $t9
     
-    li $t9,1
     li $t2,59
     sll $t2,$t2,2
     add $t2,$t2,$a0
