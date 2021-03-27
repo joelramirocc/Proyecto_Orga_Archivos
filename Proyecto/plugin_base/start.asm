@@ -28,10 +28,10 @@ move $s6,$sp
 li $t0,34
 sw $t0,224($sp)
 ;                       guardar posicion en "y" del balon
-li $t0,16
+li $t0,27
 sw $t0,228($sp)
 ;                       guardar posicion en "x" del balon
-li $t0,37
+li $t0,42
 sw $t0,232($sp)
 ;                       asignar valores iniciales de los bloques
 li $a1,30
@@ -87,8 +87,8 @@ continue_while:
     bne $s1,$zero,start_while
     move $a0,$s0
     move $a1,$v0
-    ;li $v0,24
-    ;syscall
+    li $v0,24
+    syscall
     jal update_values
     
     ;li $v0,24

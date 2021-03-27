@@ -34,7 +34,6 @@ update_values:
     ;10-28
     ;$t0-$t3
 
-    ;#show
     
     li $t4,1
     beq $t1,$t4,move_ball_default
@@ -1178,8 +1177,7 @@ colision_to_column_rigth_arriba:
 
     beq $t9,$zero,move_to_column_rigth_mov_arriba
     addi $t9,$t9,-1 ;ACTUALIZAR PUNTOS
-
-#show $t9    
+    
     sw $t9,0($t8)    
     li $t9,-1
     mult $t9,$t2
